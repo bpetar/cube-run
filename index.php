@@ -5,21 +5,25 @@
     <body>
         <canvas id="id-canvas-cubeRun"></canvas>
         <script src="./cube.js"></script>
+        <script src="./coin.js"></script>
         <script src="./table.js"></script>
 
         <script>
 
-            var coin;
-            var coinImage;
-
+            var coin1;
             var coin2;
+
+            var coinImage;
             var coinImage2;
 
             var canvas;
-            var firstCoin;
+            var firstCoin = true;
 
             var table;
             var tableField;
+
+            var cube1;
+            var cube2;
 
             function gameLoop () {
             
@@ -27,10 +31,11 @@
 
               table.render();
 
-              coin.update();
+              coin1.update();
               coin2.update();
+
               if (firstCoin)
-                coin.render();
+                coin1.render();
               else
                 coin2.renderUp();
             }
@@ -67,7 +72,6 @@
             }
 
             
-            
             // Get canvas
             canvas = document.getElementById("id-canvas-cubeRun");
             canvas.width = 900;
@@ -88,8 +92,8 @@
             tableField = new Image();    
             tableField.src = "table-field.png";
             
-            // Create sprite
-            coin = cube({
+            // Create cube sprite
+            cube1 = cube({
                 context: canvas.getContext("2d"),
                 width: 1100,
                 height: 1100,
@@ -101,7 +105,32 @@
                 posY: 2
             });
 
-            coin2 = cube({
+            cube2 = cube({
+                context: canvas.getContext("2d"),
+                width: 1100,
+                height: 1100,
+                image: coinImage2,
+                numberOfFrames: 11,
+                ticksPerFrame: 1,
+                topNumber: 1,
+                posX: 1,
+                posY: 1
+            });
+
+            // Create coin sprite
+            coin1 = coin({
+                context: canvas.getContext("2d"),
+                width: 1100,
+                height: 1100,
+                image: coinImage,
+                numberOfFrames: 11,
+                ticksPerFrame: 1,
+                topNumber: 1,
+                posX: 2,
+                posY: 2
+            });
+
+            coin2 = coin({
                 context: canvas.getContext("2d"),
                 width: 1100,
                 height: 1100,
