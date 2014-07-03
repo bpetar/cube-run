@@ -17,7 +17,7 @@
             var coinImage2;
 
             var canvas;
-            var firstCoin = true;
+            var firstPlayer = true;
 
             var table;
             var tableField;
@@ -33,40 +33,37 @@
 
               coin1.update();
               coin2.update();
-
-              if (firstCoin)
-                coin1.render();
-              else
-                coin2.renderUp();
+              coin1.render();
+              coin2.render();
             }
             
             function handleKeyDown () {
-                if ((coin.direction == "none")&&(coin2.direction == "none"))
+                if ((coin1.coin_direction == "none")&&(coin2.coin_direction == "none"))
                 {
                     if ((event.keyCode == 37) || (event.keyCode == 81)) {
                         // Turn Left Q
-                        firstCoin = true;
-                        coin2.clear()
-                        //move image to the left and animate it :)
-                        coin.roll("left");
+                        if (firstPlayer)
+                            coin1.roll("left");
+                        else
+                            coin2.roll("left");
                     } else if ((event.keyCode == 39) || (event.keyCode == 69)) {
                         // Turne Right E
-                        firstCoin = true;
-                        coin2.clear()
-                        //move image to the right and animate it :)
-                        coin.roll("right");
+                        if (firstPlayer)
+                            coin1.roll("right");
+                        else
+                            coin2.roll("right");
                     } else if ((event.keyCode == 38) || (event.keyCode == 87)) {
                         // Up cursor key or W
-                        firstCoin = false;
-                        coin.clear();
-                        //move image to the right and animate it :)
-                        coin2.roll("up");
+                        if (firstPlayer)
+                            coin1.roll("up");
+                        else
+                            coin2.roll("up");
                     } else if ((event.keyCode == 40) || (event.keyCode == 83)) {
                         // Down cursor key or S
-                        firstCoin = false;
-                        coin.clear();
-                        //move image to the right and animate it :)
-                        coin2.roll("down");
+                        if (firstPlayer)
+                            coin1.roll("down");
+                        else
+                            coin2.roll("down");
                     }
                 }
             }
@@ -138,8 +135,8 @@
                 numberOfFrames: 11,
                 ticksPerFrame: 1,
                 topNumber: 1,
-                posX: 1,
-                posY: 1
+                posX: 6,
+                posY: 6
             });
             
 
