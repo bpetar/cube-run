@@ -65,6 +65,10 @@
                         else
                             coin2.roll("down");
                     }
+                    else
+                    {
+                        firstPlayer = !firstPlayer
+                    }
                 }
             }
 
@@ -75,18 +79,14 @@
             canvas.height = 900;
             
             // Create sprite sheet
-            coinImage = new Image();    
-            // Load sprite sheet
-            coinImage.addEventListener("load", gameLoop);
-            coinImage.src = "cube-1-animation.png";
+            coinImage = new Image();
+            coinImage.src = "coin-1-animation.png";
 
             // Create sprite sheet
-            coinImage2 = new Image();    
-            // Load sprite sheet
-            //coinImage2.addEventListener("load", gameLoop);
-            coinImage2.src = "cube-2-animation.png";
+            coinImage2 = new Image();
+            coinImage2.src = "coin-2-animation.png";
 
-            tableField = new Image();    
+            tableField = new Image();
             tableField.src = "table-field.png";
             
             // Create cube sprite
@@ -143,7 +143,7 @@
             table = table({context: canvas.getContext("2d"), width: 6, height: 6, image: tableField});
 
             document.onkeydown = handleKeyDown;
-
+            window.onload = gameLoop;
 
         </script>
 
