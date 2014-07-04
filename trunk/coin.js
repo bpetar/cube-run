@@ -18,22 +18,33 @@ function coin (options) {
 	that.coin_width = options.width;
 	that.coin_height = options.height;
 	that.coin_image = options.image;
-	that.coin_x = 0;
-	that.coin_y = 0;
+	that.coin_x = (options.posX-1)*100;
+	that.coin_y = (options.posY-1)*100;
+
+	that.coin_animation_row = 0; //sprite animation row
 
 	that.coin_direction = "none";
+
 
 	that.tablePosition = {x:options.posX, y:options.posY};
 
 	that.roll = function (_direction) {
-			if (_direction == "right")
-					that.coin_frameIndex = 0
-			else if (_direction == "left")
-					that.coin_frameIndex = 10
-			else if (_direction == "up")
-					that.coin_frameIndex = 10
-			else if (_direction == "down")
-					that.coin_frameIndex = 0
+			if (_direction == "right") {
+				that.coin_frameIndex = 0;
+				that.coin_animation_row = 0;
+			}
+			else if (_direction == "left") {
+				that.coin_frameIndex = 10;
+				that.coin_animation_row = 0;
+			}
+			else if (_direction == "up") {
+				that.coin_frameIndex = 10;
+				that.coin_animation_row = 1;
+			}
+			else if (_direction == "down") {
+				that.coin_frameIndex = 0;
+				that.coin_animation_row = 1;
+			}
 			that.coin_direction = _direction;
 	}
 
@@ -57,7 +68,7 @@ function coin (options) {
 									} else {
 											that.coin_frameIndex = 0;
 											that.coin_direction = "none";
-											coin2.coin_x = that.coin_x;
+											that.tablePosition.x++;
 									}
 							}
 							else if (that.coin_direction == "left")
@@ -70,7 +81,7 @@ function coin (options) {
 									} else {
 											that.coin_frameIndex = 10;
 											that.coin_direction = "none";
-											coin2.coin_x = that.coin_x;
+											that.tablePosition.x--;
 									}
 							}
 							else if (that.coin_direction == "up")
@@ -83,7 +94,7 @@ function coin (options) {
 									} else {
 											that.coin_frameIndex = 10;
 											that.coin_direction = "none";
-											coin.coin_y = that.coin_y;
+											that.tablePosition.y--;
 									}
 							}
 							else if (that.coin_direction == "down")
@@ -96,7 +107,7 @@ function coin (options) {
 									} else {
 											that.coin_frameIndex = 0;
 											that.coin_direction = "none";
-											coin.coin_y = that.coin_y;
+											that.tablePosition.y++;
 									}
 							}
 					}
@@ -117,25 +128,7 @@ function coin (options) {
 		that.coin_context.drawImage(
 			that.coin_image,
 			that.coin_frameIndex * that.coin_width / that.coin_numberOfFrames,
-			0,
-			100,
-			100,
-			that.coin_x,
-			that.coin_y,
-			100,
-			100);
-	};
-
-	that.renderUp = function () {
-	
-		// Clear the canvas
-		//that.coin_context.clearRect(0, 0, that.coin_width, that.coin_height);
-		
-		// Draw the animation
-		that.coin_context.drawImage(
-			that.coin_image,
-			0,
-			that.coin_frameIndex * that.coin_height / that.coin_numberOfFrames,
+			that.coin_animation_row*100,
 			100,
 			100,
 			that.coin_x,
