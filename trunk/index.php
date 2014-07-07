@@ -3,7 +3,10 @@
         <title>Cube Run Demo</title>
     </head>
     <body>
-        <canvas id="id-canvas-cubeRun"></canvas>
+        <div style="margin:0 auto; width:50%;">
+            <canvas id="id-canvas-cubeRun"></canvas>
+        </div>
+
         <script src="./cube.js"></script>
         <script src="./coin.js"></script>
         <script src="./table.js"></script>
@@ -32,9 +35,9 @@
               table.render();
 
               coin1.update();
-              coin2.update();
+              //coin2.update();
               coin1.render();
-              coin2.render();
+              //coin2.render();
             }
             
             function handleKeyDown () {
@@ -43,25 +46,37 @@
                     if ((event.keyCode == 37) || (event.keyCode == 81)) {
                         // Turn Left Q
                         if (firstPlayer)
-                            coin1.roll("left");
+                        {
+                            if (coin1.tablePosition.x>1)
+                                coin1.roll("left");
+                        }
                         else
                             coin2.roll("left");
                     } else if ((event.keyCode == 39) || (event.keyCode == 69)) {
                         // Turne Right E
                         if (firstPlayer)
-                            coin1.roll("right");
+                        {
+                            if (coin1.tablePosition.x<table.t_width)
+                                coin1.roll("right");
+                        }
                         else
                             coin2.roll("right");
                     } else if ((event.keyCode == 38) || (event.keyCode == 87)) {
                         // Up cursor key or W
                         if (firstPlayer)
-                            coin1.roll("up");
+                        {
+                            if (coin1.tablePosition.y>1)
+                                coin1.roll("up");
+                        }
                         else
                             coin2.roll("up");
                     } else if ((event.keyCode == 40) || (event.keyCode == 83)) {
                         // Down cursor key or S
                         if (firstPlayer)
-                            coin1.roll("down");
+                        {
+                            if (coin1.tablePosition.y<table.t_height)
+                                coin1.roll("down");
+                        }
                         else
                             coin2.roll("down");
                     }
@@ -123,8 +138,8 @@
                 numberOfFrames: 11,
                 ticksPerFrame: 1,
                 topNumber: 1,
-                posX: 2,
-                posY: 2
+                posX: 1,
+                posY: 1
             });
 
             coin2 = coin({
@@ -140,7 +155,7 @@
             });
             
 
-            table = table({context: canvas.getContext("2d"), width: 6, height: 6, image: tableField});
+            table = table({context: canvas.getContext("2d"), width: 6, height: 2, image: tableField});
 
             document.onkeydown = handleKeyDown;
             window.onload = gameLoop;
