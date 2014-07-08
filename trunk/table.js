@@ -11,63 +11,77 @@ t_numberColor = ["red","brown","green","orange","blue","purple"]
 
 function table (options) {
 
-	t_squareWidth = 100;
-  t_squareHeight = 100;
-  t_context = options.context;
-  t_width = options.width;
-  t_height = options.height;
-  t_image = options.image;
-  t_numbers = [];
+  var that = {}
+	that.t_squareWidth = options.squareWidth;
+  that.t_squareHeight = options.squareHeight;
+  that.t_spriteWidth = options.spriteWidth;
+  that.t_spriteHeight = options.spriteHeight;
+  that.t_context = options.context;
+  that.t_width = options.width;
+  that.t_height = options.height;
+  that.t_image = options.image;
+  that.t_numbers = [];
+  that.t_destination = options.destination;
 
-
-  seed = function () {
-  	for (i=0; i<t_width*t_height; i++)
+  that.seed = function () {
+  	for (i=0; i<that.t_width*that.t_height; i++)
     {
-      t_numbers[i] = Math.floor((Math.random() * 6) + 1);
+      that.t_numbers[i] = Math.floor((Math.random() * 6) + 1);
     }
   }
 
   
-  render = function () {
+  that.render = function () {
   
     // Clear the canvas
     //context.clearRect(0, 0, width, height);
     
-    for(j=0; j<t_height; j++)
+    for(j=0; j<that.t_height; j++)
     {
-      for(i=0; i<t_width; i++)
+      for(i=0; i<that.t_width; i++)
       {
         //Draw the field
-        context.drawImage(
-          t_image,
+        that.t_context.drawImage(
+          that.t_image,
           0,
           0,
-          100,
-          100,
-          i*t_squareWidth,
-          j*t_squareHeight,
-          100,
-          100);
+          that.t_spriteWidth,
+          that.t_spriteHeight,
+          i*that.t_squareWidth,
+          j*that.t_squareHeight,
+          that.t_squareWidth,
+          that.t_squareWidth);
 
         //draw rect
         //context.beginPath();
-        context.lineWidth = "2";
-        context.strokeStyle = t_numberColor[t_numbers[(j*t_width) + i]-1];
-        context.rect(i*t_squareWidth + 5, j*t_squareHeight + 5, 90, 90);
+        that.t_context.lineWidth = "2";
+        that.t_context.strokeStyle = t_numberColor[that.t_numbers[(j*that.t_width) + i]-1];
+        that.t_context.rect(i*that.t_squareWidth + 5, j*that.t_squareHeight + 5, that.t_squareWidth-10, that.t_squareHeight-10);
         //context.stroke();
 
         //draw number
         //context.beginPath();
-        context.strokeStyle = "gray"
-        context.font="60px Arial";
-        context.strokeText(""+t_numbers[(j*t_width) + i], i*t_squareWidth + 32, j*t_squareHeight + 67);
+        that.t_context.strokeStyle = "gray"
+        that.t_context.font="60px Arial";
+        that.t_context.strokeText(""+that.t_numbers[(j*that.t_width) + i], i*that.t_squareWidth + 32, j*that.t_squareHeight + 67);
       }
     }
+
+    that.t_context.beginPath();
+    that.t_context.lineWidth = "4";
+    that.t_context.strokeStyle = t_numberColor[5-1];
+    that.t_context.rect(that.t_destination.x*that.t_squareWidth + 15, that.t_destination.y*that.t_squareHeight + 14, that.t_squareWidth-30, that.t_squareHeight-33);
+    that.t_context.stroke();
+
   };
 
-  seed();
 
-  return this;
+  if (options.numbers.length == that.t_width*that.t_height)
+    that.t_numbers = options.numbers;
+  else
+    that.seed();
+
+  return that;
 }
 
 
