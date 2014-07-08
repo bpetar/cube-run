@@ -15,11 +15,17 @@ function coin (options) {
 
 	that.coin_context = options.context;
 
-	that.coin_width = options.width;
-	that.coin_height = options.height;
+	that.coin_sprite_width = options.spriteWidth;
+	that.coin_sprite_height = options.spriteHeight;
+
+	that.coin_sprite_frame_width = options.spriteFrameWidth;
+	that.coin_sprite_frame_height = options.spriteFrameHeight;
+
+	that.coin_tableFieldSize = options.tableFieldSize;
+
 	that.coin_image = options.image;
-	that.coin_x = (options.posX-1)*100;
-	that.coin_y = (options.posY-1)*100;
+	that.coin_x = (options.posX-1)*that.coin_tableFieldSize;
+	that.coin_y = (options.posY-1)*that.coin_tableFieldSize;
 
 	that.coin_animation_row = 0; //sprite animation row
 
@@ -69,6 +75,7 @@ function coin (options) {
 											that.coin_frameIndex = 0;
 											that.coin_direction = "none";
 											that.tablePosition.x++;
+											moveFinished();
 									}
 							}
 							else if (that.coin_direction == "left")
@@ -82,6 +89,7 @@ function coin (options) {
 											that.coin_frameIndex = 10;
 											that.coin_direction = "none";
 											that.tablePosition.x--;
+											moveFinished();
 									}
 							}
 							else if (that.coin_direction == "up")
@@ -95,6 +103,7 @@ function coin (options) {
 											that.coin_frameIndex = 10;
 											that.coin_direction = "none";
 											that.tablePosition.y--;
+											moveFinished();
 									}
 							}
 							else if (that.coin_direction == "down")
@@ -108,6 +117,7 @@ function coin (options) {
 											that.coin_frameIndex = 0;
 											that.coin_direction = "none";
 											that.tablePosition.y++;
+											moveFinished();
 									}
 							}
 					}
@@ -116,25 +126,22 @@ function coin (options) {
 	
 	that.clear = function () {
 		// Clear the canvas
-		that.coin_context.clearRect(0, 0, that.coin_width, that.coin_height);
+		that.coin_context.clearRect(that.coin_x, that.coin_y, that.coin_tableFieldSize, that.coin_tableFieldSize);
 	}
 
 	that.render = function () {
 	
-		// Clear the canvas
-		//that.coin_context.clearRect(0, 0, that.coin_width, that.coin_height);
-		
 		// Draw the animation
 		that.coin_context.drawImage(
 			that.coin_image,
-			that.coin_frameIndex * that.coin_width / that.coin_numberOfFrames,
-			that.coin_animation_row*100,
-			100,
-			100,
+			that.coin_frameIndex * that.coin_sprite_width / that.coin_numberOfFrames,
+			that.coin_animation_row*that.coin_sprite_frame_height,
+			that.coin_sprite_frame_width,
+			that.coin_sprite_frame_height,
 			that.coin_x,
 			that.coin_y,
-			100,
-			100);
+			that.coin_tableFieldSize,
+			that.coin_tableFieldSize);
 	};
 	
 	return that;
