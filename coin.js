@@ -24,15 +24,15 @@ function coin (options) {
 	that.coin_tableFieldSize = options.tableFieldSize;
 
 	that.coin_image = options.image;
-	that.coin_x = (options.posX-1)*that.coin_tableFieldSize;
-	that.coin_y = (options.posY-1)*that.coin_tableFieldSize;
+	that.coin_x = (options.start.x)*that.coin_tableFieldSize;
+	that.coin_y = (options.start.y)*that.coin_tableFieldSize;
 
 	that.coin_animation_row = 0; //sprite animation row
 
 	that.coin_direction = "none";
 
 
-	that.tablePosition = {x:options.posX, y:options.posY};
+	that.tablePosition = {x:options.start.x+1, y:options.start.y+1};
 
 	that.roll = function (_direction) {
 			if (_direction == "right") {
@@ -126,7 +126,7 @@ function coin (options) {
 	
 	that.clear = function () {
 		// Clear the canvas
-		that.coin_context.clearRect(that.coin_x, that.coin_y, that.coin_tableFieldSize, that.coin_tableFieldSize);
+		that.coin_context.clearRect(that.coin_x+20, that.coin_y+20, that.coin_tableFieldSize, that.coin_tableFieldSize);
 	}
 
 	that.render = function () {
@@ -138,8 +138,8 @@ function coin (options) {
 			that.coin_animation_row*that.coin_sprite_frame_height,
 			that.coin_sprite_frame_width,
 			that.coin_sprite_frame_height,
-			that.coin_x,
-			that.coin_y,
+			that.coin_x+20,
+			that.coin_y+20,
 			that.coin_tableFieldSize,
 			that.coin_tableFieldSize);
 	};
