@@ -24,6 +24,7 @@ function table (options) {
   that.t_destination = options.destination;
   that.t_map = options.map;
   that.t_image_background = options.background;
+	that.t_scale = options.squareWidth/options.spriteWidth;
 
   that.seed = function () {
   	for (i=0; i<that.t_width*that.t_height; i++)
@@ -105,8 +106,8 @@ function table (options) {
             //draw number
             //context.beginPath();
             that.t_context.strokeStyle = "gray"
-            that.t_context.font="60px Arial";
-            that.t_context.strokeText(""+that.t_numbers[(j*that.t_width) + i], i*that.t_squareWidth + 52, j*that.t_squareHeight + 87);
+            that.t_context.font=""+ 60*that.t_scale + "px Arial";
+            that.t_context.strokeText(""+that.t_numbers[(j*that.t_width) + i], i*that.t_squareWidth + 32*that.t_scale+20, j*that.t_squareHeight + 67*that.t_scale+20);
           }
         }
         else
@@ -134,8 +135,8 @@ function table (options) {
           //draw number
           //context.beginPath();
           that.t_context.strokeStyle = "gray"
-          that.t_context.font="60px Arial";
-          that.t_context.strokeText(""+that.t_numbers[(j*that.t_width) + i], i*that.t_squareWidth + 52, j*that.t_squareHeight + 87);
+          that.t_context.font=""+ 60*that.t_scale + "px Arial";
+          that.t_context.strokeText(""+that.t_numbers[(j*that.t_width) + i], i*that.t_squareWidth + 32*that.t_scale+20, j*that.t_squareHeight + 67*that.t_scale+20);
         }
       }
     }
@@ -143,7 +144,7 @@ function table (options) {
     that.t_context.beginPath();
     that.t_context.lineWidth = "4";
     that.t_context.strokeStyle = t_numberColor[5-1];
-    that.t_context.rect(that.t_destination.x*that.t_squareWidth + 35, that.t_destination.y*that.t_squareHeight + 34, that.t_squareWidth-30, that.t_squareHeight-33);
+    that.t_context.rect(that.t_destination.x*that.t_squareWidth + 15*that.t_scale+20, that.t_destination.y*that.t_squareHeight + 14*that.t_scale+20, that.t_squareWidth-30*that.t_scale, that.t_squareHeight-33*that.t_scale);
     that.t_context.stroke();
 
   };
