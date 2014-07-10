@@ -36,15 +36,32 @@ function table (options) {
   
   that.render = function () {
   
-    // Clear the canvas
-    //context.clearRect(0, 0, width, height);
-    for(j=0; j<that.t_height; j++)
+    
+    //Draw background tiles
+    if (that.t_image_background)
     {
-      for(i=0; i<that.t_width; i++)
+      for(j=0; j<that.t_height; j++)
       {
-        if(that.t_map)
+        for(i=0; i<that.t_width; i++)
         {
-          if(that.t_map[j*that.t_width+i] == 1)
+          if(that.t_map)
+          {
+            if(that.t_map[j*that.t_width+i] == 1)
+            {
+              //Draw the field background
+              that.t_context.drawImage(
+                that.t_image_background,
+                0,
+                0,
+                140,
+                140,
+                i*that.t_squareWidth,
+                j*that.t_squareHeight,
+                140*that.t_scale,
+                140*that.t_scale);
+            }
+          }
+          else
           {
             //Draw the field background
             that.t_context.drawImage(
@@ -55,23 +72,9 @@ function table (options) {
               140,
               i*that.t_squareWidth,
               j*that.t_squareHeight,
-              140,
-              140);
+              140*that.t_scale,
+              140*that.t_scale);
           }
-        }
-        else
-        {
-          //Draw the field background
-          that.t_context.drawImage(
-            that.t_image_background,
-            0,
-            0,
-            140,
-            140,
-            i*that.t_squareWidth,
-            j*that.t_squareHeight,
-            140,
-            140);
         }
       }
     }
@@ -80,21 +83,35 @@ function table (options) {
     {
       for(i=0; i<that.t_width; i++)
       {
+        
+
         if(that.t_map)
         {
           if(that.t_map[j*that.t_width+i] == 1)
           {
+            that.t_context.clearRect(i*that.t_squareWidth+20*that.t_scale, j*that.t_squareHeight+20*that.t_scale, that.t_squareWidth, that.t_squareHeight);
             //Draw the field
-            that.t_context.drawImage(
-              that.t_image,
-              0,
-              0,
-              that.t_spriteWidth,
-              that.t_spriteHeight,
-              i*that.t_squareWidth+20,
-              j*that.t_squareHeight+20,
-              that.t_squareWidth,
-              that.t_squareWidth);
+            if (that.t_image)
+            {
+              that.t_context.drawImage(
+                that.t_image,
+                0,
+                0,
+                that.t_spriteWidth,
+                that.t_spriteHeight,
+                i*that.t_squareWidth+20*that.t_scale,
+                j*that.t_squareHeight+20*that.t_scale,
+                that.t_squareWidth,
+                that.t_squareWidth);
+            }
+            else
+            {
+              context.beginPath();
+              that.t_context.lineWidth = "2";
+              that.t_context.strokeStyle = "black";
+              that.t_context.rect(i*that.t_squareWidth+20*that.t_scale, j*that.t_squareHeight+20*that.t_scale, that.t_squareWidth, that.t_squareHeight);
+              context.stroke();
+            }
 
             //draw rect
             //context.beginPath();
@@ -107,23 +124,35 @@ function table (options) {
             //context.beginPath();
             that.t_context.strokeStyle = "gray"
             that.t_context.font=""+ 60*that.t_scale + "px Arial";
-            that.t_context.strokeText(""+that.t_numbers[(j*that.t_width) + i], i*that.t_squareWidth + 32*that.t_scale+20, j*that.t_squareHeight + 67*that.t_scale+20);
+            that.t_context.strokeText(""+that.t_numbers[(j*that.t_width) + i], i*that.t_squareWidth + 52*that.t_scale, j*that.t_squareHeight + 87*that.t_scale);
           }
         }
         else
         {
 
+          that.t_context.clearRect(i*that.t_squareWidth+20*that.t_scale, j*that.t_squareHeight+20*that.t_scale, that.t_squareWidth, that.t_squareHeight);
           //Draw the field
-          that.t_context.drawImage(
-            that.t_image,
-            0,
-            0,
-            that.t_spriteWidth,
-            that.t_spriteHeight,
-            i*that.t_squareWidth+20,
-            j*that.t_squareHeight+20,
-            that.t_squareWidth,
-            that.t_squareWidth);
+          if (that.t_image)
+          {
+            that.t_context.drawImage(
+              that.t_image,
+              0,
+              0,
+              that.t_spriteWidth,
+              that.t_spriteHeight,
+              i*that.t_squareWidth+20*that.t_scale,
+              j*that.t_squareHeight+20*that.t_scale,
+              that.t_squareWidth,
+              that.t_squareWidth);
+          }
+          else
+          {
+            context.beginPath();
+            that.t_context.lineWidth = "2";
+            that.t_context.strokeStyle = "black";
+            that.t_context.rect(i*that.t_squareWidth+20*that.t_scale, j*that.t_squareHeight+20*that.t_scale, that.t_squareWidth, that.t_squareHeight);
+            context.stroke();
+          }
 
           //draw rect
           //context.beginPath();
@@ -136,7 +165,7 @@ function table (options) {
           //context.beginPath();
           that.t_context.strokeStyle = "gray"
           that.t_context.font=""+ 60*that.t_scale + "px Arial";
-          that.t_context.strokeText(""+that.t_numbers[(j*that.t_width) + i], i*that.t_squareWidth + 32*that.t_scale+20, j*that.t_squareHeight + 67*that.t_scale+20);
+          that.t_context.strokeText(""+that.t_numbers[(j*that.t_width) + i], i*that.t_squareWidth + 52*that.t_scale, j*that.t_squareHeight + 87*that.t_scale);
         }
       }
     }
@@ -144,7 +173,7 @@ function table (options) {
     that.t_context.beginPath();
     that.t_context.lineWidth = "4";
     that.t_context.strokeStyle = t_numberColor[5-1];
-    that.t_context.rect(that.t_destination.x*that.t_squareWidth + 15*that.t_scale+20, that.t_destination.y*that.t_squareHeight + 14*that.t_scale+20, that.t_squareWidth-30*that.t_scale, that.t_squareHeight-33*that.t_scale);
+    that.t_context.rect(that.t_destination.x*that.t_squareWidth + 35*that.t_scale, that.t_destination.y*that.t_squareHeight + 34*that.t_scale, that.t_squareWidth-30*that.t_scale, that.t_squareHeight-33*that.t_scale);
     that.t_context.stroke();
 
   };
