@@ -168,6 +168,12 @@
             function advanceLevel()
             {
                 currentLevel++;
+								if (currentLevel >= level.length)
+								{
+									currentLevel--;
+									alert("That was last level, come back later for more.");
+									return;
+								}
                 alert(level[currentLevel].message)
                 document.getElementById("id-p-level").innerHTML = "Level " + (currentLevel + 1);
                 showLevel();
@@ -177,7 +183,7 @@
 
             // Level params            
             var level = [{
-                tableFieldSize:100,
+                tableFieldSize:150,
                 tableWidth:5,
                 tableHeight:1,
                 destination:{x:4,y:0},
@@ -195,7 +201,7 @@
                 message: "Congratulations! \n\nBut that was easy start. You might find next level more challenging.."
             },
             {
-                tableFieldSize:100,
+                tableFieldSize:75,
                 tableWidth:6,
                 tableHeight:6,
                 destination:{x:2,y:2},
@@ -204,7 +210,7 @@
                 message: "Well Done! \n\nLets see how you handle wider areas.."
             },
             {
-                tableFieldSize:100,
+                tableFieldSize:50,
                 tableWidth:5,
                 tableHeight:7,
                 destination:{x:2,y:0},
