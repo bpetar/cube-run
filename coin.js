@@ -22,6 +22,7 @@ function coin (options) {
 	that.coin_sprite_frame_height = options.spriteFrameHeight;
 
 	that.coin_tableFieldSize = options.tableFieldSize;
+	that.coin_scale = options.tableFieldSize/options.spriteFrameWidth;
 
 	that.coin_image = options.image;
 	that.coin_x = (options.start.x)*that.coin_tableFieldSize;
@@ -70,7 +71,7 @@ function coin (options) {
 									if (that.coin_frameIndex < that.coin_numberOfFrames - 1) {  
 											// Go to the next frame
 											that.coin_frameIndex += 1;
-											that.coin_x +=10
+											that.coin_x +=10*that.coin_scale;
 									} else {
 											that.coin_frameIndex = 0;
 											that.coin_direction = "none";
@@ -84,7 +85,7 @@ function coin (options) {
 									if (that.coin_frameIndex > 0) {  
 											// Go to the next frame
 											that.coin_frameIndex -= 1;
-											that.coin_x -=10
+											that.coin_x -=10*that.coin_scale;
 									} else {
 											that.coin_frameIndex = 10;
 											that.coin_direction = "none";
@@ -98,7 +99,7 @@ function coin (options) {
 									if (that.coin_frameIndex > 0) {  
 											// Go to the next frame
 											that.coin_frameIndex -= 1;
-											that.coin_y -=10
+											that.coin_y -=10*that.coin_scale;
 									} else {
 											that.coin_frameIndex = 10;
 											that.coin_direction = "none";
@@ -112,7 +113,7 @@ function coin (options) {
 									if (that.coin_frameIndex < that.coin_numberOfFrames - 1) {  
 											// Go to the next frame
 											that.coin_frameIndex += 1;
-											that.coin_y +=10
+											that.coin_y +=10*that.coin_scale;
 									} else {
 											that.coin_frameIndex = 0;
 											that.coin_direction = "none";
@@ -126,7 +127,7 @@ function coin (options) {
 	
 	that.clear = function () {
 		// Clear the canvas
-		that.coin_context.clearRect(that.coin_x+20, that.coin_y+20, that.coin_tableFieldSize, that.coin_tableFieldSize);
+		that.coin_context.clearRect(that.coin_x+20*that.coin_scale, that.coin_y+20*that.coin_scale, that.coin_tableFieldSize, that.coin_tableFieldSize);
 	}
 
 	that.render = function () {
@@ -138,8 +139,8 @@ function coin (options) {
 			that.coin_animation_row*that.coin_sprite_frame_height,
 			that.coin_sprite_frame_width,
 			that.coin_sprite_frame_height,
-			that.coin_x+20,
-			that.coin_y+20,
+			that.coin_x+20*that.coin_scale,
+			that.coin_y+20*that.coin_scale,
 			that.coin_tableFieldSize,
 			that.coin_tableFieldSize);
 	};

@@ -189,6 +189,8 @@
                 destination:{x:4,y:0},
                 start:{x:0,y:0},
                 numbers: [1,2,3,4,5],
+                //tableFieldImage: "table-field.png",
+                //tableBackgroundImage: "tileBackground.png",
                 message: ""
             },
             {
@@ -198,6 +200,8 @@
                 destination:{x:3,y:0},
                 start:{x:0,y:0},
                 numbers: [1,6,4,5,2,3,5,1],
+                tableFieldImage: "table-field.png",
+                tableBackgroundImage: "tileBackground.png",
                 message: "Congratulations! \n\nBut that was easy start. You might find next level more challenging.."
             },
             {
@@ -207,6 +211,8 @@
                 destination:{x:2,y:2},
                 start:{x:5,y:5},
                 numbers: [],
+                tableFieldImage: "table-field.png",
+                tableBackgroundImage: "tileBackground.png",
                 message: "Well Done! \n\nLets see how you handle wider areas.."
             },
             {
@@ -216,21 +222,24 @@
                 destination:{x:2,y:0},
                 start:{x:2,y:6},
                 numbers: [],
+                tableFieldImage: "table-field.png",
+                tableBackgroundImage: "tileBackground.png",
                 map:[0,0,1,0,0, 1,1,1,1,1, 1,1,1,1,1, 1,0,1,0,1, 1,1,1,1,1, 1,1,1,1,1, 0,0,1,0,0],
                 message: "Superb! \n\nNow you must learn about The Perks.."
             }];
 
             function showLevel ()
             {
+                var scale = level[currentLevel].tableFieldSize/100;
                 // Get canvas
                 canvas = document.getElementById("id-canvas-cubeRun");
-                canvas.width = level[currentLevel].tableWidth*level[currentLevel].tableFieldSize+40;
-                canvas.height = level[currentLevel].tableHeight*level[currentLevel].tableFieldSize+40;
+                canvas.width = level[currentLevel].tableWidth*level[currentLevel].tableFieldSize+40*scale;
+                canvas.height = level[currentLevel].tableHeight*level[currentLevel].tableFieldSize+40*scale;
 
                 // Get table
                 tableDiv = document.getElementById("id-div-table");
-                tableDiv.style.width = "" + (level[currentLevel].tableWidth*level[currentLevel].tableFieldSize+40) + "px";
-                tableDiv.style.height = "" + (level[currentLevel].tableHeight*level[currentLevel].tableFieldSize+40) + "px";
+                tableDiv.style.width = "" + (level[currentLevel].tableWidth*level[currentLevel].tableFieldSize+40*scale) + "px";
+                tableDiv.style.height = "" + (level[currentLevel].tableHeight*level[currentLevel].tableFieldSize+40*scale) + "px";
                 
                 // Create sprite sheet
                 coinImage = new Image();
@@ -240,11 +249,26 @@
                 coinImage2 = new Image();
                 coinImage2.src = "coin-2-animation.png";
 
-                tableField = new Image();
-                tableField.src = "table-field.png";
+                if (level[currentLevel].tableFieldImage)
+                {
+                    tableField = new Image();
+                    tableField.src = level[currentLevel].tableFieldImage;
+                }
+                else
+                {
+                    tableField = null;
+                }
 
-                tableBackground = new Image();
-                tableBackground.src = "tileBackground.png";
+                if (level[currentLevel].tableBackgroundImage)
+                {
+                    tableBackground = new Image();
+                    tableBackground.src = level[currentLevel].tableBackgroundImage;
+                }
+                else
+                {
+                    tableBackground = null;
+                }
+                
                 
                 // Create cube sprite
                 cube1 = cube({
