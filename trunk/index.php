@@ -3,17 +3,38 @@
         <title>Cube Run Demo</title>
     </head>
     <body>
-        <div id="id-div-headline" style="border: green solid 1px; text-align: center; margin: 10px auto 20px auto; width:260px; height:80px;">
+        <div id="id-div-menu" style="text-align: center; margin: auto auto auto auto; width:260px;">
+            <span style="cursor:pointer; color:blue; margin: auto 5px auto 5px" onclick="firstLevel()">begin</span> <span style="cursor:pointer; color:blue; margin: auto 5px auto 5px" onclick="refresh()">restart</span> <span style="cursor:pointer; color:blue; margin: auto 5px auto 5px" onclick="showLevelsInfo()">levels</span> <span style="cursor:pointer; color:blue; margin: auto 5px auto 5px" onclick="showAbout()">about</span>
+        </div>
+        <div id="id-div-headline" style="border: green solid 1px; text-align: center; margin: auto auto 20px auto; width:260px; height:80px;">
             <p> CUBE RUN</p>
-            <p id="id-p-level"> Level 1</p>
+            <p id="id-p-level"> <span style="cursor:pointer; color:blue;" onclick="previousLevel()"> < </span> <span style="margin: auto 50px auto 50px" id="id-span-level"> Level 1 </span> <span style="cursor:pointer; color:blue;" onclick="nextLevel()"> > </span> </p>
         </div>
         <div id="id-div-table" style="margin:auto auto auto auto; width:50%; height:50%;">
             <canvas id="id-canvas-cubeRun"></canvas>
         </div>
 
-        <div id="id-div-headline" style="text-align: center; margin: 10px auto 10px auto; width:480px; height:80px;">
+        <div id="id-div-instructions" style="text-align: center; margin: 10px auto 10px auto; width:480px; height:80px;">
             <span> 1. Roll your cube to reach destination. </span> <br>
             <span> 2. Number on the top of the cube must match number on the destination field.</span>
+        </div>
+
+        <div id="id-div-perks" style="display:none; text-align: center; margin: 10px auto 10px auto; width:480px; height:80px;">
+            <span> 1. Every number has its perk. </span> <br>
+            <span> 2. Collect number artefacts to activate perks.</span>
+        </div>
+
+        <div id="id-div-about" style="display:none; text-align: center; margin: 10px auto 10px auto; width:480px; height:80px;">
+            <span> Cube Run is game designed and created by Ajandi Endre and Petar Bajic.</span> <br>
+            <span> For best experience, we suggest you draw table on the paper and play against your friends.</span>
+        </div>
+
+         <div id="id-div-levels" style="display:none; text-align: center; margin: 10px auto 10px auto; width:480px; height:80px;">
+            <span style="cursor:pointer; color:blue; text-decoration:underline" onclick="showLevelIndex(1)"> Level 01: Learn to roll.</span> <br>
+            <span style="cursor:pointer; color:blue; text-decoration:underline"  onclick="showLevelIndex(2)"> Level 02: The catch.</span> <br>
+            <span style="cursor:pointer; color:blue; text-decoration:underline"  onclick="showLevelIndex(3)"> Level 03: Play the game.</span> <br>
+            <span style="cursor:pointer; color:blue; text-decoration:underline"  onclick="showLevelIndex(4)"> Level 04: About the Perks.</span> <br>
+            <span style="cursor:pointer; color:blue; text-decoration:underline"  onclick="showLevelIndex(5)"> Level 05: ToDo.</span> <br>
         </div>
 
         <script src="./cube.js"></script>
@@ -37,6 +58,8 @@
 
             var cube1;
             var cube2;
+
+            var inAndAbout = false;
 
             function gameLoop () {
             
@@ -168,14 +191,63 @@
             function advanceLevel()
             {
                 currentLevel++;
-								if (currentLevel >= level.length)
-								{
-									currentLevel--;
-									alert("That was last level, come back later for more.");
-									return;
-								}
+				if (currentLevel >= level.length)
+				{
+					currentLevel--;
+					alert("That was last level, come back later for more.");
+					return;
+				}
                 alert(level[currentLevel].message)
-                document.getElementById("id-p-level").innerHTML = "Level " + (currentLevel + 1);
+                document.getElementById("id-span-level").innerHTML = "Level " + (currentLevel + 1);
+                showLevel();
+            }
+
+            function previousLevel()
+            {
+                
+                currentLevel--;
+                if (currentLevel >= 0)
+                {
+                    document.getElementById("id-span-level").innerHTML = "Level " + (currentLevel + 1);
+                    showLevel();
+                }
+                else if (inAndAbout)
+                {
+                    currentLevel++;
+                    document.getElementById("id-span-level").innerHTML = "Level " + (currentLevel + 1);
+                    showLevel();
+                }
+                else
+                {
+                    currentLevel++;
+                    alert("This is first level, cant go back")
+                }
+                
+            }
+
+            function nextLevel()
+            {
+                currentLevel++;
+                if (currentLevel >= level.length)
+                {
+                    currentLevel--;
+                    alert("That was last level, come back later for more.");
+                    return;
+                }
+                //alert(level[currentLevel].message)
+                document.getElementById("id-span-level").innerHTML = "Level " + (currentLevel + 1);
+                showLevel();
+            }
+
+            function firstLevel()
+            {
+                currentLevel = 0;
+                document.getElementById("id-span-level").innerHTML = "Level " + (currentLevel + 1);
+                showLevel();
+            }
+
+            function refresh()
+            {
                 showLevel();
             }
 
@@ -200,23 +272,23 @@
                 destination:{x:3,y:0},
                 start:{x:0,y:0},
                 numbers: [1,6,4,5,2,3,5,1],
-                tableFieldImage: "table-field.png",
-                tableBackgroundImage: "tileBackground.png",
+                //tableFieldImage: "table-field3.png",
+                //tableBackgroundImage: "tileBackground.png",
                 message: "Congratulations! \n\nBut that was easy start. You might find next level more challenging.."
             },
             {
-                tableFieldSize:75,
+                tableFieldSize:80,
                 tableWidth:6,
                 tableHeight:6,
                 destination:{x:2,y:2},
                 start:{x:5,y:5},
                 numbers: [],
-                tableFieldImage: "table-field.png",
-                tableBackgroundImage: "tileBackground.png",
+                tableFieldImage: "table-field2.png",
+                tableBackgroundImage: "tileBackground2.png",
                 message: "Well Done! \n\nLets see how you handle wider areas.."
             },
             {
-                tableFieldSize:50,
+                tableFieldSize:60,
                 tableWidth:5,
                 tableHeight:7,
                 destination:{x:2,y:0},
@@ -228,8 +300,91 @@
                 message: "Superb! \n\nNow you must learn about The Perks.."
             }];
 
+            function showAbout ()
+            {
+                inAndAbout = true;
+                document.getElementById("id-span-level").innerHTML = "Level About"
+
+                tableDiv = document.getElementById("id-div-table");
+                tableDiv.style.width = "0px";
+                tableDiv.style.height = "0px";
+
+                canvas = document.getElementById("id-canvas-cubeRun");
+                canvas.width = 0;
+                canvas.height = 0;
+
+                instructionsDiv = document.getElementById("id-div-instructions");
+                instructionsDiv.style.display = "none";
+                instructionsDiv = document.getElementById("id-div-perks");
+                instructionsDiv.style.display = "none";
+                instructionsDiv = document.getElementById("id-div-levels");
+                instructionsDiv.style.display = "none";
+
+                instructionsDiv = document.getElementById("id-div-about");
+                instructionsDiv.style.display = "block";
+            }
+
+
+            function showLevelsInfo ()
+            {
+                inAndAbout = true;
+                document.getElementById("id-span-level").innerHTML = "Level About"
+
+                tableDiv = document.getElementById("id-div-table");
+                tableDiv.style.width = "0px";
+                tableDiv.style.height = "0px";
+
+                canvas = document.getElementById("id-canvas-cubeRun");
+                canvas.width = 0;
+                canvas.height = 0;
+
+                instructionsDiv = document.getElementById("id-div-instructions");
+                instructionsDiv.style.display = "none";
+                instructionsDiv = document.getElementById("id-div-perks");
+                instructionsDiv.style.display = "none";
+                instructionsDiv = document.getElementById("id-div-about");
+                instructionsDiv.style.display = "none";
+
+                instructionsDiv = document.getElementById("id-div-levels");
+                instructionsDiv.style.display = "block";
+            }
+
+            function showLevelIndex (index)
+            {
+                
+                if((index>0) && (index <= level.length))
+                {
+                    currentLevel = index-1;
+                    showLevel();
+                }
+                else
+                {
+                    alert("Error: Level does not exist!");
+                }
+            }
+
             function showLevel ()
             {
+                if (currentLevel < 3)
+                {
+                    instructionsDiv = document.getElementById("id-div-instructions");
+                    instructionsDiv.style.display = "block";
+                    instructionsDiv = document.getElementById("id-div-perks");
+                    instructionsDiv.style.display = "none";
+                }
+                else
+                {
+                    instructionsDiv = document.getElementById("id-div-instructions");
+                    instructionsDiv.style.display = "none";
+                    instructionsDiv = document.getElementById("id-div-perks");
+                    instructionsDiv.style.display = "block";
+                }
+
+                instructionsDiv = document.getElementById("id-div-about");
+                instructionsDiv.style.display = "none";
+                instructionsDiv = document.getElementById("id-div-levels");
+                instructionsDiv.style.display = "none";
+
                 var scale = level[currentLevel].tableFieldSize/100;
                 // Get canvas
                 canvas = document.getElementById("id-canvas-cubeRun");
