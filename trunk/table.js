@@ -26,6 +26,14 @@ function table (options) {
   that.t_image_background = options.background;
 	that.t_scale = options.squareWidth/options.spriteWidth;
 
+  if(options.perks)
+  {
+    that.t_perks = options.perks;
+    perkImage = new Image();
+    perkImage.src = "perk3.png";
+    that.t_perks[0].image = perkImage;
+  }
+  
   that.seed = function () {
   	for (i=0; i<that.t_width*that.t_height; i++)
     {
@@ -170,6 +178,23 @@ function table (options) {
       }
     }
 
+    if(that.t_perks)
+    {
+      for (i=0; i < that.t_perks.length; i++)
+      {
+        //draw perk image
+        that.t_context.drawImage(
+          that.t_perks[i].image,
+          0,
+          0,
+          that.t_spriteWidth,
+          that.t_spriteHeight,
+          that.t_perks[i].x*that.t_squareWidth+20*that.t_scale,
+          that.t_perks[i].y*that.t_squareHeight+20*that.t_scale,
+          that.t_squareWidth,
+          that.t_squareWidth);
+      }
+    }
     that.t_context.beginPath();
     that.t_context.lineWidth = "4";
     that.t_context.strokeStyle = t_numberColor[5-1];

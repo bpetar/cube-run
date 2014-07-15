@@ -19,9 +19,24 @@
             <span> 2. Number on the top of the cube must match number on the destination field.</span>
         </div>
 
-        <div id="id-div-perks" style="display:none; text-align: center; margin: 10px auto 10px auto; width:480px; height:80px;">
+        <div id="id-div-perks" style="display:none; text-align: center; margin: 10px auto 10px auto; width:630px; height:80px;">
             <span> 1. Every number has its perk. </span> <br>
             <span> 2. Collect number artefacts to activate perks.</span>
+
+            <div id="perk-table" style="margin: 10px auto 10px auto; width:624px; height:100px;">
+                <div id="perk-1" style="margin: auto 1px auto 1px; float:left; width:100px; height:100px; border:solid red 1px; background: url(1.png);">
+                </div>
+                <div id="perk-2" style="margin: auto 1px auto 1px; float:left; width:100px; height:100px; border:solid orange 1px; background: url(2.png);">
+                </div>
+                <div id="perk-3" style="margin: auto 1px auto 1px; float:left; width:100px; height:100px; border:solid green 1px; background: url(3.png);">
+                </div>
+                <div id="perk-4" style="margin: auto 1px auto 1px; float:left; width:100px; height:100px; border:solid brown 1px; background: url(4.png);">
+                </div>
+                <div id="perk-5" style="margin: auto 1px auto 1px; float:left; width:100px; height:100px; border:solid blue 1px; background: url(5.png);">
+                </div>
+                <div id="perk-6" style="margin: auto 1px auto 1px; float:left; width:100px; height:100px; border:solid purple 1px; background: url(6.png);">
+                </div>
+            </div>
         </div>
 
         <div id="id-div-about" style="display:none; text-align: center; margin: 10px auto 10px auto; width:480px; height:80px;">
@@ -78,6 +93,19 @@
                 {
                     //finish level
                     advanceLevel();
+                }
+                if (level[currentLevel].perks)
+                {
+                    for (i=0; i < level[currentLevel].perks.length; i++)
+                    {
+                        if ((coin1.tablePosition.x-1 == level[currentLevel].perks[i].x) && ((coin1.tablePosition.y-1 == level[currentLevel].perks[i].y)) )
+                        {
+                            //stepped on perk
+                            alert("Perk " + level[currentLevel].perks[i].id + " acquired!");
+                            //remove perk from the table
+                            //add perk to the inventory div
+                        }
+                    }
                 }
             }
 
@@ -293,6 +321,7 @@
                 tableHeight:7,
                 destination:{x:2,y:0},
                 start:{x:2,y:6},
+                perks:[{id:3,x:3,y:5}],
                 numbers: [],
                 tableFieldImage: "table-field.png",
                 tableBackgroundImage: "tileBackground.png",
@@ -488,6 +517,7 @@
                     width: level[currentLevel].tableWidth, 
                     height: level[currentLevel].tableHeight, 
                     image: tableField,
+                    perks: level[currentLevel].perks,
                     background: tableBackground,
                     numbers: level[currentLevel].numbers, 
                     destination: level[currentLevel].destination,
