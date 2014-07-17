@@ -102,8 +102,16 @@
                         {
                             //stepped on perk
                             alert("Perk " + level[currentLevel].perks[i].id + " acquired!");
-                            //remove perk from the table
                             //add perk to the inventory div
+                            perkdiv = document.getElementById("perk-"+level[currentLevel].perks[i].id);
+                            perkdiv.style.backgroundImage = "url(perk"+level[currentLevel].perks[i].id+".png)";
+                            //remove perk from the table
+                            table1.t_perks.splice(i,1);
+                            //remove perk from the level
+                            level[currentLevel].perks.splice(i,1);
+                            //add perk to user data
+                            //mark all perked numbers on the table
+                            break;
                         }
                     }
                 }

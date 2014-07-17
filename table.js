@@ -163,6 +163,7 @@ function table (options) {
           }
 
           //draw rect
+          //draw perk rectangles
           //context.beginPath();
           that.t_context.lineWidth = "2";
           that.t_context.strokeStyle = t_numberColor[that.t_numbers[(j*that.t_width) + i]-1];
@@ -195,6 +196,8 @@ function table (options) {
           that.t_squareWidth);
       }
     }
+
+    //draw destination rectangle
     that.t_context.beginPath();
     that.t_context.lineWidth = "4";
     that.t_context.strokeStyle = t_numberColor[5-1];
