@@ -55,7 +55,7 @@ function coin (options) {
 			that.coin_direction = _direction;
 	}
 
-	that.update = function () {
+	that.update = function (elapsed) {
 
 			if (that.coin_direction != "none")
 			{

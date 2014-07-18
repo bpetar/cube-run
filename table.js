@@ -9,6 +9,11 @@
 
 t_numberColor = ["red","brown","green","orange","blue","purple"]
 
+var TABLE_ANIMATION_SPEED = 200;
+var currentFrameMsStack = 0;
+var tick = 0;
+
+
 function table (options) {
 
   var that = {}
@@ -26,7 +31,7 @@ function table (options) {
   that.t_image_background = options.background;
 	that.t_scale = options.squareWidth/options.spriteWidth;
 
-  if(options.perks)
+  if((options.perks) && (options.perks.length > 0))
   {
     that.t_perks = options.perks;
     perkImage = new Image();
@@ -42,9 +47,16 @@ function table (options) {
   }
 
   
-  that.render = function () {
+  that.render = function (elapsed) {
   
-    
+    currentFrameMsStack += elapsed;
+    if (currentFrameMsStack>TABLE_ANIMATION_SPEED)
+    {
+      currentFrameMsStack = 0;
+      tick++;
+      if (tick > 3) tick = 1;
+    }
+
     //Draw background tiles
     if (that.t_image_background)
     {
@@ -121,16 +133,22 @@ function table (options) {
               context.stroke();
             }
 
-            //draw rect
-            //context.beginPath();
-            that.t_context.lineWidth = "2";
-            that.t_context.strokeStyle = t_numberColor[that.t_numbers[(j*that.t_width) + i]-1];
-            that.t_context.rect(i*that.t_squareWidth + 25, j*that.t_squareHeight + 25, that.t_squareWidth-10, that.t_squareHeight-10);
-            //context.stroke();
+            //draw perk rectangles
+            if(userHasPerk(that.t_numbers[(j*that.t_width) + i]))
+            {
+              that.t_context.beginPath();
+              that.t_context.lineWidth = "1";
+              if((activePerkNumber == 3)&&(that.t_numbers[(j*that.t_width) + i] == 3)&&((i!=coin1.tablePosition.x-1)||(j!=coin1.tablePosition.y-1)))
+                that.t_context.lineWidth = ""+tick;
+              that.t_context.strokeStyle = t_numberColor[that.t_numbers[(j*that.t_width) + i]-1];
+              that.t_context.rect(i*that.t_squareWidth + 27*that.t_scale, j*that.t_squareHeight + 27*that.t_scale, that.t_squareWidth-14*that.t_scale, that.t_squareHeight-14*that.t_scale);
+              that.t_context.stroke();
+            }
 
             //draw number
-            //context.beginPath();
+            that.t_context.beginPath();
             that.t_context.strokeStyle = "gray"
+            that.t_context.lineWidth = "1";
             that.t_context.font=""+ 60*that.t_scale + "px Arial";
             that.t_context.strokeText(""+that.t_numbers[(j*that.t_width) + i], i*that.t_squareWidth + 52*that.t_scale, j*that.t_squareHeight + 87*that.t_scale);
           }
@@ -162,16 +180,20 @@ function table (options) {
             context.stroke();
           }
 
-          //draw rect
           //draw perk rectangles
-          //context.beginPath();
-          that.t_context.lineWidth = "2";
-          that.t_context.strokeStyle = t_numberColor[that.t_numbers[(j*that.t_width) + i]-1];
-          that.t_context.rect(i*that.t_squareWidth + 25, j*that.t_squareHeight + 25, that.t_squareWidth-10, that.t_squareHeight-10);
-          //context.stroke();
+          if(userHasPerk(that.t_numbers[(j*that.t_width) + i]))
+          {
+            that.t_context.beginPath();
+            that.t_context.lineWidth = "1";
+              if((activePerkNumber == 3)&&(that.t_numbers[(j*that.t_width) + i] == 3)&&((i!=coin1.tablePosition.x-1)||(j!=coin1.tablePosition.y-1)))
+                that.t_context.lineWidth = ""+tick;
+            that.t_context.strokeStyle = t_numberColor[that.t_numbers[(j*that.t_width) + i]-1];
+            that.t_context.rect(i*that.t_squareWidth + 25*that.t_scale, j*that.t_squareHeight + 25*that.t_scale, that.t_squareWidth-10*that.t_scale, that.t_squareHeight-10*that.t_scale);
+            that.t_context.stroke();
+          }
 
           //draw number
-          //context.beginPath();
+          that.t_context.beginPath();
           that.t_context.strokeStyle = "gray"
           that.t_context.font=""+ 60*that.t_scale + "px Arial";
           that.t_context.strokeText(""+that.t_numbers[(j*that.t_width) + i], i*that.t_squareWidth + 52*that.t_scale, j*that.t_squareHeight + 87*that.t_scale);
@@ -203,6 +225,12 @@ function table (options) {
     that.t_context.strokeStyle = t_numberColor[5-1];
     that.t_context.rect(that.t_destination.x*that.t_squareWidth + 35*that.t_scale, that.t_destination.y*that.t_squareHeight + 34*that.t_scale, that.t_squareWidth-30*that.t_scale, that.t_squareHeight-33*that.t_scale);
     that.t_context.stroke();
+
+    // that.t_context.beginPath();
+    // that.t_context.lineWidth = "1";
+    // that.t_context.strokeStyle = "red"
+    // that.t_context.font=""+ 20 + "px Arial";
+    // that.t_context.strokeText(""+tick, 40, 40);
 
   };
 

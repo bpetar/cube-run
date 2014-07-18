@@ -74,26 +74,44 @@
             var cube1;
             var cube2;
 
+            var activePerkNumber = 0;
+
             var inAndAbout = false;
+
+            var gameTime = new Date();
+            var lastGameTime = gameTime.getTime();
+
+            var userData = {perks:[0]};
 
             function gameLoop () {
             
               window.requestAnimationFrame(gameLoop);
 
-              table1.render();
+              gameTime = new Date();
+              var currentGameTime = gameTime.getTime();
+              var elapsed = currentGameTime - lastGameTime;
+              lastGameTime = currentGameTime;
 
-              coin1.update();
+              table1.render(elapsed);
+
+              coin1.update(elapsed);
               //coin2.update();
               coin1.render();
               //coin2.render();
             }
             
             function moveFinished() {
+                x = coin1.tablePosition.x-1;
+                y = coin1.tablePosition.y-1;
+                tableFieldNumber = table1.t_numbers[(y)*table1.t_width + (x)];
+                diceTopNumber = 3;
+                //if finish
                 if ((coin1.tablePosition.x-1 == level[currentLevel].destination.x) && ((coin1.tablePosition.y-1 == level[currentLevel].destination.y)) )
                 {
                     //finish level
                     advanceLevel();
                 }
+                //if perk found
                 if (level[currentLevel].perks)
                 {
                     for (i=0; i < level[currentLevel].perks.length; i++)
@@ -101,24 +119,66 @@
                         if ((coin1.tablePosition.x-1 == level[currentLevel].perks[i].x) && ((coin1.tablePosition.y-1 == level[currentLevel].perks[i].y)) )
                         {
                             //stepped on perk
-                            alert("Perk " + level[currentLevel].perks[i].id + " acquired!");
+                            perki = level[currentLevel].perks[i].id;
+                            alert("Perk " + perki + " acquired!");
                             //add perk to the inventory div
-                            perkdiv = document.getElementById("perk-"+level[currentLevel].perks[i].id);
-                            perkdiv.style.backgroundImage = "url(perk"+level[currentLevel].perks[i].id+".png)";
+                            perkdiv = document.getElementById("perk-"+perki);
+                            perkdiv.style.backgroundImage = "url(perk"+perki+".png)";
                             //remove perk from the table
                             table1.t_perks.splice(i,1);
                             //remove perk from the level
                             level[currentLevel].perks.splice(i,1);
                             //add perk to user data
-                            //mark all perked numbers on the table
+                            userData.perks.push(perki);
                             break;
                         }
                     }
                 }
+                //if perk stepped
+                if(diceTopNumber == tableFieldNumber)
+                {
+                    if (userHasPerk(diceTopNumber))
+                    {
+                        //activate perk
+                        activatePerk(diceTopNumber);
+                    }
+                }
+            }
+
+            function teleport(x,y)
+            {
+                //move coin to x,y
+                coin1.tablePosition.x = x+1;
+                coin1.tablePosition.y = y+1;
+                coin1.coin_x = x*level[currentLevel].tableFieldSize;
+                coin1.coin_y = y*level[currentLevel].tableFieldSize;
+            }
+
+            function activatePerk(perk)
+            {
+                activePerkNumber = perk;
+                if(perk == 3)
+                {
+                    alert("Perk 3 activated! Click field to teleport...")
+                    //drop shadow on the screen
+                    //lightup three fields
+                    //add cancel button
+                }
+            }
+
+            function userHasPerk(perk)
+            {
+                for (var i=0; i<userData.perks.length; i++)
+                {
+                    if (userData.perks[i] == perk)
+                        return true
+                }
+                return false;
             }
 
             function handleKeyDown () {
-                if ((coin1.coin_direction == "none")&&(coin2.coin_direction == "none"))
+
+                if ((coin1.coin_direction == "none")&&(coin2.coin_direction == "none")&&(activePerkNumber == 0))
                 {
                     if ((event.keyCode == 37) || (event.keyCode == 81)) {
                         // Turn Left Q
@@ -224,6 +284,78 @@
                 }
             }
 
+            function onMouseMove(even) 
+            {
+                var x_pos = event.clientX;
+                var y_pos = event.clientY;
+                var rect = canvas.getBoundingClientRect();
+                //check that mouse position is within table position
+                levelScale = level[currentLevel].tableFieldSize/100;
+                if ((x_pos>rect.left+20*levelScale) && (x_pos<rect.left+rect.width-20*levelScale) && (y_pos>rect.top+20*levelScale) && (y_pos<rect.top+rect.height-20*levelScale))
+                {
+                    var tableX = x_pos-(rect.left+20*levelScale);
+                    var tableY = y_pos-(rect.top+20*levelScale);
+                    var i = Math.floor(tableX/level[currentLevel].tableFieldSize);
+                    var j = Math.floor(tableY/level[currentLevel].tableFieldSize);
+                    var numberMouseIsHovering = table1.t_numbers[(j)*table1.t_width + (i)];
+                    if(activePerkNumber == 3)
+                    {
+                        if(numberMouseIsHovering == 3)
+                        {
+                            tableDiv.style.cursor = 'pointer';
+                        }
+                        else
+                        {
+                            tableDiv.style.cursor = 'auto';
+                        }
+                    }
+                }
+
+            }
+
+            function onMouseClick(event) 
+            {
+
+
+                var isRightMB;
+                var e = event || window.event;
+                if ("which" in e)  // Gecko (Firefox), WebKit (Safari/Chrome) & Opera
+                    isRightMB = e.which == 3; 
+                else if ("button" in e)  // IE, Opera 
+                    isRightMB = e.button == 2; 
+                
+                var x_pos = event.clientX;
+                var y_pos = event.clientY;
+
+                var rect = canvas.getBoundingClientRect();
+                
+                //check that mouse position is within table position
+
+                levelScale = level[currentLevel].tableFieldSize/100;
+                if ((x_pos>rect.left+20*levelScale) && (x_pos<rect.left+rect.width-20*levelScale) && (y_pos>rect.top+20*levelScale) && (y_pos<rect.top+rect.height-20*levelScale))
+                {
+                    var tableX = x_pos-(rect.left+20*levelScale);
+                    var tableY = y_pos-(rect.top+20*levelScale);
+                    //console.log("in canvas onMouseClick " + tableX + " " + tableY);
+                    var i = Math.floor(tableX/level[currentLevel].tableFieldSize);
+                    var j = Math.floor(tableY/level[currentLevel].tableFieldSize);
+                    var numberClickedOn = table1.t_numbers[(j)*table1.t_width + (i)];
+                    console.log("clicked on " + i + " " + j);
+                    console.log("clicked on number: " + numberClickedOn);
+                    if (activePerkNumber == 3)
+                    {
+                        if (numberClickedOn == 3)
+                        {
+                            activePerkNumber = 0;
+                            //remove shadow
+                            tableDiv.style.cursor = 'auto';
+                            teleport(i,j);
+                        }
+                    }
+                }
+
+            }
+
             function advanceLevel()
             {
                 currentLevel++;
@@ -284,6 +416,7 @@
 
             function refresh()
             {
+                activePerkNumber = 0;
                 showLevel();
             }
 
@@ -535,6 +668,8 @@
             }
 
             document.onkeydown = handleKeyDown;
+            document.onmousedown = onMouseClick;
+            document.onmousemove = onMouseMove;
             window.onload = gameLoop;
             showLevel();
 
