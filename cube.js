@@ -8,152 +8,386 @@
 
 function cube (options) {
 
-	frameIndex = 0;
-	tickCount = 0;
-	ticksPerFrame = options.ticksPerFrame || 0;
-	numberOfFrames = options.numberOfFrames || 1;
+	var that = {}
 
-	context = options.context;
+	that.cube_frameIndex = 0;
+	that.cube_tickCount = 0;
+	that.cube_ticksPerFrame = options.ticksPerFrame || 0;
+	that.cube_numberOfFrames = options.numberOfFrames || 1;
+	that.cube_context = options.context;
+	that.cube_sprite_width = options.spriteWidth;
+	that.cube_sprite_height = options.spriteHeight;
+	that.cube_sprite_frame_width = options.spriteFrameWidth;
+	that.cube_sprite_frame_height = options.spriteFrameHeight;
+	that.cube_tableFieldSize = options.tableFieldSize;
+	that.cube_scale = options.tableFieldSize/options.spriteFrameWidth;
 
-	width = options.width;
-	height = options.height;
-	image = options.image;
-	x = 0;
-	y = 0;
+	that.current_cube_image = null;
+	that.cube_image1 = options.image1;
+	that.cube_image2 = options.image2;
+	that.cube_image3 = options.image3;
+	that.cube_image4 = options.image4;
+	that.cube_image5 = options.image5;
+	that.cube_image6 = options.image6;
+	
+	that.cube_x = (options.start.x)*that.cube_tableFieldSize;
+	that.cube_y = (options.start.y)*that.cube_tableFieldSize;
+	that.cube_animation_row = 6*options.rotation; //sprite animation row
+	that.cube_direction = "none";
+	that.rotationState = options.rotation;
+	that.topNumber = options.topNumber;
+	that.tablePosition = {x:options.start.x+1, y:options.start.y+1};
 
-	direction = "none";
+	if(options.topNumber == 1)
+	{
+		that.current_cube_image = that.cube_image1;
+	}
+	else if(options.topNumber == 2)
+	{
+		that.current_cube_image = that.cube_image2;
+	}
+	else if(options.topNumber == 3)
+	{
+		that.current_cube_image = that.cube_image3;
+	}
+	else if(options.topNumber == 4)
+	{
+		that.current_cube_image = that.cube_image4;
+	}
+	else if(options.topNumber == 5)
+	{
+		that.current_cube_image = that.cube_image5;
+	}
+	else if(options.topNumber == 6)
+	{
+		that.current_cube_image = that.cube_image6;
+	}
 
-	tablePosition = {x:options.posX, y:options.posY};
-	topNumber = options.topNumber;
-	rotationState = 0;
-
-	rotate = function (_direction) {
+	that.rotate = function (_direction) {
 		if (_direction == "right")
-			rotationState++;
+		{
+			that.rotationState++;
+			if(that.rotationState>3)
+				that.rotationState = 0;
+		}
 		else
-			rotationState--;
+		{	
+			that.rotationState--;
+			if(that.rotationState<0)
+				that.rotationState = 3;
+		}
 	}
 
-	roll = function (_direction) {
-			if (_direction == "right")
-					frameIndex = 0
-			else if (_direction == "left")
-					frameIndex = 10
-			else if (_direction == "up")
-					frameIndex = 10
-			else if (_direction == "down")
-					frameIndex = 0
-			direction = _direction;
-	}
-
-	update = function () {
-
-			if (direction != "none")
+	that.changeCubeFace = function (_direction) {
+		if (_direction == "right") {
+			if (that.topNumber == 1)
 			{
-					tickCount += 1;
+				if (that.rotationState == 0)
+				{
+					that.topNumber = 5;
+					that.rotationState = 3;
+					that.current_cube_image = that.cube_image5;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 1)
+				{
+					that.topNumber = 4;
+					that.rotationState = 3;
+					that.current_cube_image = that.cube_image4;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 2)
+				{
+					that.topNumber = 2;
+					that.rotationState = 3;
+					that.current_cube_image = that.cube_image2;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 3)
+				{
+					that.topNumber = 3;
+					that.rotationState = 3;
+					that.current_cube_image = that.cube_image3;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+			}
+			else if (that.topNumber == 2)
+			{
+			}
+			else if (that.topNumber == 3)
+			{
+			}
+			else if (that.topNumber == 4)
+			{
+			}
+			else if (that.topNumber == 5)
+			{
+			}
+			else if (that.topNumber == 6)
+			{
+			}
+		}
+		else if (_direction == "left") {
+			if (that.topNumber == 1)
+			{
+				if (that.rotationState == 0)
+				{
+					that.topNumber = 2;
+					that.rotationState = 1;
+					that.current_cube_image = that.cube_image2;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 1)
+				{
+					that.topNumber = 3;
+					that.rotationState = 1;
+					that.current_cube_image = that.cube_image3;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 2)
+				{
+					that.topNumber = 5;
+					that.rotationState = 1;
+					that.current_cube_image = that.cube_image5;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 3)
+				{
+					that.topNumber = 4;
+					that.rotationState = 1;
+					that.current_cube_image = that.cube_image4;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+			}
+			else if (that.topNumber == 2)
+			{
+			}
+			else if (that.topNumber == 3)
+			{
+			}
+			else if (that.topNumber == 4)
+			{
+			}
+			else if (that.topNumber == 5)
+			{
+			}
+			else if (that.topNumber == 6)
+			{
+			}
+		}
+		else if (_direction == "up") {
+			if (that.topNumber == 1)
+			{
+				if (that.rotationState == 0)
+				{
+					that.topNumber = 3;
+					that.rotationState = 0;
+					that.current_cube_image = that.cube_image3;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 1)
+				{
+					that.topNumber = 5;
+					that.rotationState = 0;
+					that.current_cube_image = that.cube_image5;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 2)
+				{
+					that.topNumber = 4;
+					that.rotationState = 0;
+					that.current_cube_image = that.cube_image4;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 3)
+				{
+					that.topNumber = 2;
+					that.rotationState = 0;
+					that.current_cube_image = that.cube_image2;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+			}
+			else if (that.topNumber == 2)
+			{
+			}
+			else if (that.topNumber == 3)
+			{
+			}
+			else if (that.topNumber == 4)
+			{
+			}
+			else if (that.topNumber == 5)
+			{
+			}
+			else if (that.topNumber == 6)
+			{
+			}
+		}
+		else if (_direction == "down") {
+			if (that.topNumber == 1)
+			{
+				if (that.rotationState == 0)
+				{
+					that.topNumber = 4;
+					that.rotationState = 2;
+					that.current_cube_image = that.cube_image4;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 1)
+				{
+					that.topNumber = 2;
+					that.rotationState = 2;
+					that.current_cube_image = that.cube_image2;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 2)
+				{
+					that.topNumber = 3;
+					that.rotationState = 2;
+					that.current_cube_image = that.cube_image3;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 3)
+				{
+					that.topNumber = 5;
+					that.rotationState = 2;
+					that.current_cube_image = that.cube_image5;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+			}
+			else if (that.topNumber == 2)
+			{
+			}
+			else if (that.topNumber == 3)
+			{
+			}
+			else if (that.topNumber == 4)
+			{
+			}
+			else if (that.topNumber == 5)
+			{
+			}
+			else if (that.topNumber == 6)
+			{
+			}
+		}
+	}
 
-					if (tickCount > ticksPerFrame) {
+	that.roll = function (_direction) {
+			if (_direction == "right") {
+				that.cube_frameIndex = 0;
+				that.cube_animation_row = 6*that.rotationState+4-1;
+			}
+			else if (_direction == "left") {
+				that.cube_frameIndex = 0;
+				that.cube_animation_row = 6*that.rotationState+3-1;
+			}
+			else if (_direction == "up") {
+				that.cube_frameIndex = 0;
+				that.cube_animation_row = 6*that.rotationState+1-1;
+			}
+			else if (_direction == "down") {
+				that.cube_frameIndex = 0;
+				that.cube_animation_row = 6*that.rotationState+2-1;
+			}
+			that.cube_direction = _direction;
+	}
 
-							tickCount = 0;
+	that.update = function (elapsed) {
+
+			if (that.cube_direction != "none")
+			{
+					that.cube_tickCount += 1;
+
+					if (that.cube_tickCount > that.cube_ticksPerFrame) {
+
+							that.cube_tickCount = 0;
 							
-							if (direction == "right")
+							if (that.cube_direction == "right")
 							{
 									// If the current frame index is in range
-									if (frameIndex < numberOfFrames - 1) {  
+									if (that.cube_frameIndex < that.cube_numberOfFrames - 1) {
 											// Go to the next frame
-											frameIndex += 1;
-											x +=10
+											that.cube_frameIndex += 1;
+											that.cube_x +=10*that.cube_scale;
 									} else {
-											frameIndex = 0;
-											direction = "none";
-											coin2.x = x;
+											that.cube_frameIndex = 0;
+											that.changeCubeFace("right");
+											that.cube_direction = "none";
+											that.tablePosition.x++;
+											moveFinished();
 									}
 							}
-							else if (direction == "left")
+							else if (that.cube_direction == "left")
 							{
 									// If the current frame index is in range
-									if (frameIndex > 0) {  
+									if (that.cube_frameIndex < that.cube_numberOfFrames - 1) {
 											// Go to the next frame
-											frameIndex -= 1;
-											x -=10
+											that.cube_frameIndex += 1;
+											that.cube_x -=10*that.cube_scale;
 									} else {
-											frameIndex = 10;
-											direction = "none";
-											coin2.x = x;
+											that.cube_frameIndex = 0;
+											that.changeCubeFace("left");
+											that.cube_direction = "none";
+											that.tablePosition.x--;
+											moveFinished();
 									}
 							}
-							else if (direction == "up")
+							else if (that.cube_direction == "up")
 							{
 									// If the current frame index is in range
-									if (frameIndex > 0) {  
+									if (that.cube_frameIndex < that.cube_numberOfFrames - 1) {
 											// Go to the next frame
-											frameIndex -= 1;
-											y -=10
+											that.cube_frameIndex += 1;
+											that.cube_y -=10*that.cube_scale;
 									} else {
-											frameIndex = 10;
-											direction = "none";
-											coin.y = y;
+											that.cube_frameIndex = 0;
+											that.changeCubeFace("up");
+											that.cube_direction = "none";
+											that.tablePosition.y--;
+											moveFinished();
 									}
 							}
-							else if (direction == "down")
+							else if (that.cube_direction == "down")
 							{
 									// If the current frame index is in range
-									if (frameIndex < numberOfFrames - 1) {  
+									if (that.cube_frameIndex < that.cube_numberOfFrames - 1) {
 											// Go to the next frame
-											frameIndex += 1;
-											y +=10
+											that.cube_frameIndex += 1;
+											that.cube_y +=10*that.cube_scale;
 									} else {
-											frameIndex = 0;
-											direction = "none";
-											coin.y = y;
+											that.cube_frameIndex = 0;
+											that.changeCubeFace("down");
+											that.cube_direction = "none";
+											that.tablePosition.y++;
+											moveFinished();
 									}
 							}
 					}
 			}
 	};
 	
-	clear = function () {
+	that.clear = function () {
 		// Clear the canvas
-		context.clearRect(0, 0, width, height);
+		that.cube_context.clearRect(that.cube_x+20*that.cube_scale, that.cube_y+20*that.cube_scale, that.cube_tableFieldSize, that.cube_tableFieldSize);
 	}
 
-	render = function () {
+	that.render = function () {
 	
-		// Clear the canvas
-		//context.clearRect(0, 0, width, height);
-		
 		// Draw the animation
-		context.drawImage(
-			image,
-			frameIndex * width / numberOfFrames,
-			0,
-			100,
-			100,
-			x,
-			y,
-			100,
-			100);
-	};
-
-	renderUp = function () {
-	
-		// Clear the canvas
-		//context.clearRect(0, 0, width, height);
-		
-		// Draw the animation
-		context.drawImage(
-			image,
-			0,
-			frameIndex * height / numberOfFrames,
-			100,
-			100,
-			x,
-			y,
-			100,
-			100);
+		that.cube_context.drawImage(
+			that.current_cube_image,
+			that.cube_frameIndex * that.cube_sprite_width / that.cube_numberOfFrames,
+			that.cube_animation_row*that.cube_sprite_frame_height,
+			that.cube_sprite_frame_width,
+			that.cube_sprite_frame_height,
+			that.cube_x+20*that.cube_scale,
+			that.cube_y+20*that.cube_scale,
+			that.cube_tableFieldSize,
+			that.cube_tableFieldSize);
 	};
 	
-	return this;
+	return that;
 }
 
 

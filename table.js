@@ -173,11 +173,11 @@ function table (options) {
           }
           else
           {
-            context.beginPath();
+            that.t_context.beginPath();
             that.t_context.lineWidth = "2";
             that.t_context.strokeStyle = "black";
             that.t_context.rect(i*that.t_squareWidth+20*that.t_scale, j*that.t_squareHeight+20*that.t_scale, that.t_squareWidth, that.t_squareHeight);
-            context.stroke();
+            that.t_context.stroke();
           }
 
           //draw perk rectangles
