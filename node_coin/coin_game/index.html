@@ -52,16 +52,16 @@
             <span style="cursor:pointer; color:blue; text-decoration:underline"  onclick="showLevelIndex(5)"> Level 05: ToDo.</span> <br>
         </div>
 
-        <script src="./cube.js"></script>
+        <script src="./coin.js"></script>
         <script src="./table.js"></script>
 
         <script>
 
-            //var coin1;
-            //var coin2;
+            var coin1;
+            var coin2;
 
-            var cubeImage;
-            var cubeImage2;
+            var coinImage;
+            var coinImage2;
 
             var canvas;
             var firstPlayer = true;
@@ -69,10 +69,7 @@
             var table1;
             var tableField;
             var tableBackground;
-
-            var cube1;
-            var cube2;
-
+			
             var activePerkNumber = 0;
 
             var inAndAbout = false;
@@ -93,19 +90,19 @@
 
               table1.render(elapsed);
 
-              cube1.update(elapsed);
+              coin1.update(elapsed);
               //coin2.update();
-              cube1.render();
+              coin1.render();
               //coin2.render();
             }
             
             function moveFinished() {
-                x = cube1.tablePosition.x-1;
-                y = cube1.tablePosition.y-1;
+                x = coin1.tablePosition.x-1;
+                y = coin1.tablePosition.y-1;
                 tableFieldNumber = table1.t_numbers[(y)*table1.t_width + (x)];
                 diceTopNumber = 3;
                 //if finish
-                if ((cube1.tablePosition.x-1 == level[currentLevel].destination.x) && ((cube1.tablePosition.y-1 == level[currentLevel].destination.y)) )
+                if ((coin1.tablePosition.x-1 == level[currentLevel].destination.x) && ((coin1.tablePosition.y-1 == level[currentLevel].destination.y)) )
                 {
                     //finish level
                     advanceLevel();
@@ -115,7 +112,7 @@
                 {
                     for (i=0; i < level[currentLevel].perks.length; i++)
                     {
-                        if ((cube1.tablePosition.x-1 == level[currentLevel].perks[i].x) && ((cube1.tablePosition.y-1 == level[currentLevel].perks[i].y)) )
+                        if ((coin1.tablePosition.x-1 == level[currentLevel].perks[i].x) && ((coin1.tablePosition.y-1 == level[currentLevel].perks[i].y)) )
                         {
                             //stepped on perk
                             perki = level[currentLevel].perks[i].id;
@@ -146,11 +143,11 @@
 
             function teleport(x,y)
             {
-                //move cube to x,y
-                cube1.tablePosition.x = x+1;
-                cube1.tablePosition.y = y+1;
-                cube1.canvas_x = x*level[currentLevel].tableFieldSize;
-                cube1.canvas_y = y*level[currentLevel].tableFieldSize;
+                //move coin to x,y
+                coin1.tablePosition.x = x+1;
+                coin1.tablePosition.y = y+1;
+                coin1.coin_x = x*level[currentLevel].tableFieldSize;
+                coin1.coin_y = y*level[currentLevel].tableFieldSize;
             }
 
             function activatePerk(perk)
@@ -177,103 +174,103 @@
 
             function handleKeyDown () {
 
-                if ((cube1.cube_direction == "none")/*&&(coin2.coin_direction == "none")*/&&(activePerkNumber == 0))
+                if ((coin1.coin_direction == "none")&&(coin2.coin_direction == "none")&&(activePerkNumber == 0))
                 {
                     if ((event.keyCode == 37) || (event.keyCode == 81)) {
                         // Turn Left Q
                         if (firstPlayer)
                         {
-                            if (cube1.tablePosition.x>1)
+                            if (coin1.tablePosition.x>1)
                             {
                                 if(table1.t_map)
                                 {
-                                    newFieldIndex = (cube1.tablePosition.y-1)*table1.t_width+(cube1.tablePosition.x-1)-1
+                                    newFieldIndex = (coin1.tablePosition.y-1)*table1.t_width+(coin1.tablePosition.x-1)-1
                                     if (table1.t_map[newFieldIndex] == 1)
                                     {
-                                        cube1.roll("left");
+                                        coin1.roll("left");
                                     }
                                 }
                                 else
                                 {
-                                    cube1.roll("left");
+                                    coin1.roll("left");
                                 }
                             }
                         }
                         else
                         {
-                            //coin2.roll("left");
+                            coin2.roll("left");
                         }
                     } else if ((event.keyCode == 39) || (event.keyCode == 69)) {
                         // Turne Right E
                         if (firstPlayer)
                         {
-                            if (cube1.tablePosition.x<table1.t_width)
+                            if (coin1.tablePosition.x<table1.t_width)
                             {
                                 if(table1.t_map)
                                 {
-                                    newFieldIndex = (cube1.tablePosition.y-1)*table1.t_width+(cube1.tablePosition.x-1)+1
+                                    newFieldIndex = (coin1.tablePosition.y-1)*table1.t_width+(coin1.tablePosition.x-1)+1
                                     if (table1.t_map[newFieldIndex] == 1)
                                     {
-                                        cube1.roll("right");
+                                        coin1.roll("right");
                                     }
                                 }
                                 else
                                 {
-                                    cube1.roll("right");
+                                    coin1.roll("right");
                                 }
                             }
                         }
                         else
                         {
-                            //coin2.roll("right");
+                            coin2.roll("right");
                         }
                     } else if ((event.keyCode == 38) || (event.keyCode == 87)) {
                         // Up cursor key or W
                         if (firstPlayer)
                         {
-                            if (cube1.tablePosition.y>1)
+                            if (coin1.tablePosition.y>1)
                             {
                                 if(table1.t_map)
                                 {
-                                    newFieldIndex = (cube1.tablePosition.y-2)*table1.t_width+(cube1.tablePosition.x-1)
+                                    newFieldIndex = (coin1.tablePosition.y-2)*table1.t_width+(coin1.tablePosition.x-1)
                                     if (table1.t_map[newFieldIndex] == 1)
                                     {
-                                        cube1.roll("up");
+                                        coin1.roll("up");
                                     }
                                 }
                                 else
                                 {
-                                    cube1.roll("up");
+                                    coin1.roll("up");
                                 }
                             }
                         }
                         else
                         {
-                            //coin2.roll("up");
+                            coin2.roll("up");
                         }
                     } else if ((event.keyCode == 40) || (event.keyCode == 83)) {
                         // Down cursor key or S
                         if (firstPlayer)
                         {
-                            if (cube1.tablePosition.y<table1.t_height)
+                            if (coin1.tablePosition.y<table1.t_height)
                             {
                                 if(table1.t_map)
                                 {
-                                    newFieldIndex = (cube1.tablePosition.y)*table1.t_width+(cube1.tablePosition.x-1)
+                                    newFieldIndex = (coin1.tablePosition.y)*table1.t_width+(coin1.tablePosition.x-1)
                                     if (table1.t_map[newFieldIndex] == 1)
                                     {
-                                        cube1.roll("down");
+                                        coin1.roll("down");
                                     }
                                 }
                                 else
                                 {
-                                    cube1.roll("down");
+                                    coin1.roll("down");
                                 }
                             }
                         }
                         else
                         {
-                            //coin2.roll("down");
+                            coin2.roll("down");
                         }
                     }
                     else
@@ -431,9 +428,7 @@
                 numbers: [1,2,3,4,5],
                 //tableFieldImage: "table-field.png",
                 //tableBackgroundImage: "tileBackground.png",
-                message: "",
-                topNumber: 1,
-                cube1Rotation: 1
+                message: ""
             },
             {
                 tableFieldSize:100,
@@ -444,9 +439,7 @@
                 numbers: [1,6,4,5,2,3,5,1],
                 //tableFieldImage: "table-field3.png",
                 //tableBackgroundImage: "tileBackground.png",
-                message: "Congratulations! \n\nBut that was easy start. You might find next level more challenging..",
-                topNumber: 1,
-                cube1Rotation: 3
+                message: "Congratulations! \n\nBut that was easy start. You might find next level more challenging.."
             },
             {
                 tableFieldSize:80,
@@ -457,9 +450,7 @@
                 numbers: [],
                 tableFieldImage: "table-field2.png",
                 tableBackgroundImage: "tileBackground2.png",
-                message: "Well Done! \n\nLets see how you handle wider areas..",
-                topNumber: 1,
-                cube1Rotation: 0
+                message: "Well Done! \n\nLets see how you handle wider areas.."
             },
             {
                 tableFieldSize:60,
@@ -472,9 +463,7 @@
                 tableFieldImage: "table-field.png",
                 tableBackgroundImage: "tileBackground.png",
                 map:[0,0,1,0,0, 1,1,1,1,1, 1,1,1,1,1, 1,0,1,0,1, 1,1,1,1,1, 1,1,1,1,1, 0,0,1,0,0],
-                message: "Superb! \n\nNow you must learn about The Perks..",
-                topNumber: 1,
-                cube1Rotation: 2
+                message: "Superb! \n\nNow you must learn about The Perks.."
             }];
 
             function showAbout ()
@@ -573,19 +562,13 @@
                 tableDiv.style.width = "" + (level[currentLevel].tableWidth*level[currentLevel].tableFieldSize+40*scale) + "px";
                 tableDiv.style.height = "" + (level[currentLevel].tableHeight*level[currentLevel].tableFieldSize+40*scale) + "px";
                 
-                // Create sprite sheets for cube
-                cubeImage1 = new Image();
-                cubeImage1.src = "cube-1-animation.png";
-                cubeImage2 = new Image();
-                cubeImage2.src = "cube-2-animation.png";
-                cubeImage3 = new Image();
-                cubeImage3.src = "cube-3-animation.png";
-                cubeImage4 = new Image();
-                cubeImage4.src = "cube-4-animation.png";
-                cubeImage5 = new Image();
-                cubeImage5.src = "cube-5-animation.png";
-                cubeImage6 = new Image();
-                cubeImage6.src = "cube-6-animation.png";
+                // Create sprite sheet
+                coinImage = new Image();
+                coinImage.src = "coin-1-animation.png";
+
+                // Create sprite sheet
+                coinImage2 = new Image();
+                coinImage2.src = "coin-2-animation.png";
 
                 if (level[currentLevel].tableFieldImage)
                 {
@@ -608,25 +591,33 @@
                 }
                 
                 
-                // Create cube sprite
-                cube1 = cube({
+                // Create coin sprite
+                coin1 = coin({
                     context: canvas.getContext("2d"),
                     spriteWidth: 1100,
-                    spriteHeight: 2400,
+                    spriteHeight: 200,
                     spriteFrameWidth: 100,
                     spriteFrameHeight: 100,
                     tableFieldSize : level[currentLevel].tableFieldSize,
-                    image1: cubeImage1,
-                    image2: cubeImage2,
-                    image3: cubeImage3,
-                    image4: cubeImage4,
-                    image5: cubeImage5,
-                    image6: cubeImage6,
+                    image: coinImage,
                     numberOfFrames: 11,
                     ticksPerFrame: 1,
-                    topNumber: level[currentLevel].topNumber,
-                    start: level[currentLevel].start,
-                    rotation: level[currentLevel].cube1Rotation
+                    topNumber: 1,
+                    start: level[currentLevel].start
+                });
+
+                coin2 = coin({
+                    context: canvas.getContext("2d"),
+                    spriteWidth: 1100,
+                    spriteHeight: 200,
+                    spriteFrameWidth: 100,
+                    spriteFrameHeight: 100,
+                    tableFieldSize : level[currentLevel].tableFieldSize,
+                    image: coinImage2,
+                    numberOfFrames: 11,
+                    ticksPerFrame: 1,
+                    topNumber: 1,
+                    start: level[currentLevel].start
                 });
                 
                 table1 = table({
