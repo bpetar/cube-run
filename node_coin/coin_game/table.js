@@ -134,23 +134,23 @@ function table (options) {
             }
 
             //draw perk rectangles
-            if(userHasPerk(that.t_numbers[(j*that.t_width) + i]))
-            {
-              that.t_context.beginPath();
-              that.t_context.lineWidth = "1";
-              if((activePerkNumber == 3)&&(that.t_numbers[(j*that.t_width) + i] == 3)&&((i!=coin1.tablePosition.x-1)||(j!=coin1.tablePosition.y-1)))
-                that.t_context.lineWidth = ""+tick;
-              that.t_context.strokeStyle = t_numberColor[that.t_numbers[(j*that.t_width) + i]-1];
-              that.t_context.rect(i*that.t_squareWidth + 27*that.t_scale, j*that.t_squareHeight + 27*that.t_scale, that.t_squareWidth-14*that.t_scale, that.t_squareHeight-14*that.t_scale);
-              that.t_context.stroke();
-            }
+            // if(userHasPerk(that.t_numbers[(j*that.t_width) + i]))
+            // {
+            //   that.t_context.beginPath();
+            //   that.t_context.lineWidth = "1";
+            //   if((activePerkNumber == 3)&&(that.t_numbers[(j*that.t_width) + i] == 3)&&((i!=coin1.tablePosition.x-1)||(j!=coin1.tablePosition.y-1)))
+            //     that.t_context.lineWidth = ""+tick;
+            //   that.t_context.strokeStyle = t_numberColor[that.t_numbers[(j*that.t_width) + i]-1];
+            //   that.t_context.rect(i*that.t_squareWidth + 27*that.t_scale, j*that.t_squareHeight + 27*that.t_scale, that.t_squareWidth-14*that.t_scale, that.t_squareHeight-14*that.t_scale);
+            //   that.t_context.stroke();
+            // }
 
             //draw number
-            that.t_context.beginPath();
-            that.t_context.strokeStyle = "gray"
-            that.t_context.lineWidth = "1";
-            that.t_context.font=""+ 60*that.t_scale + "px Arial";
-            that.t_context.strokeText(""+that.t_numbers[(j*that.t_width) + i], i*that.t_squareWidth + 52*that.t_scale, j*that.t_squareHeight + 87*that.t_scale);
+            // that.t_context.beginPath();
+            // that.t_context.strokeStyle = "gray"
+            // that.t_context.lineWidth = "1";
+            // that.t_context.font=""+ 60*that.t_scale + "px Arial";
+            // that.t_context.strokeText(""+that.t_numbers[(j*that.t_width) + i], i*that.t_squareWidth + 52*that.t_scale, j*that.t_squareHeight + 87*that.t_scale);
           }
         }
         else
@@ -180,23 +180,23 @@ function table (options) {
             that.t_context.stroke();
           }
 
-          //draw perk rectangles
-          if(userHasPerk(that.t_numbers[(j*that.t_width) + i]))
-          {
-            that.t_context.beginPath();
-            that.t_context.lineWidth = "1";
-              if((activePerkNumber == 3)&&(that.t_numbers[(j*that.t_width) + i] == 3)&&((i!=coin1.tablePosition.x-1)||(j!=coin1.tablePosition.y-1)))
-                that.t_context.lineWidth = ""+tick;
-            that.t_context.strokeStyle = t_numberColor[that.t_numbers[(j*that.t_width) + i]-1];
-            that.t_context.rect(i*that.t_squareWidth + 25*that.t_scale, j*that.t_squareHeight + 25*that.t_scale, that.t_squareWidth-10*that.t_scale, that.t_squareHeight-10*that.t_scale);
-            that.t_context.stroke();
-          }
+          // //draw perk rectangles
+          // if(userHasPerk(that.t_numbers[(j*that.t_width) + i]))
+          // {
+          //   that.t_context.beginPath();
+          //   that.t_context.lineWidth = "1";
+          //     if((activePerkNumber == 3)&&(that.t_numbers[(j*that.t_width) + i] == 3)&&((i!=coin1.tablePosition.x-1)||(j!=coin1.tablePosition.y-1)))
+          //       that.t_context.lineWidth = ""+tick;
+          //   that.t_context.strokeStyle = t_numberColor[that.t_numbers[(j*that.t_width) + i]-1];
+          //   that.t_context.rect(i*that.t_squareWidth + 25*that.t_scale, j*that.t_squareHeight + 25*that.t_scale, that.t_squareWidth-10*that.t_scale, that.t_squareHeight-10*that.t_scale);
+          //   that.t_context.stroke();
+          // }
 
           //draw number
-          that.t_context.beginPath();
-          that.t_context.strokeStyle = "gray"
-          that.t_context.font=""+ 60*that.t_scale + "px Arial";
-          that.t_context.strokeText(""+that.t_numbers[(j*that.t_width) + i], i*that.t_squareWidth + 52*that.t_scale, j*that.t_squareHeight + 87*that.t_scale);
+          // that.t_context.beginPath();
+          // that.t_context.strokeStyle = "gray"
+          // that.t_context.font=""+ 60*that.t_scale + "px Arial";
+          // that.t_context.strokeText(""+that.t_numbers[(j*that.t_width) + i], i*that.t_squareWidth + 52*that.t_scale, j*that.t_squareHeight + 87*that.t_scale);
         }
       }
     }
@@ -235,10 +235,10 @@ function table (options) {
   };
 
 
-  if (options.numbers.length == that.t_width*that.t_height)
-    that.t_numbers = options.numbers;
-  else
-    that.seed();
+  // if (options.numbers.length == that.t_width*that.t_height)
+  //   that.t_numbers = options.numbers;
+  // else
+  //   that.seed();
 
   return that;
 }

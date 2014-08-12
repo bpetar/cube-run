@@ -61,6 +61,9 @@
 			var coin1;
 			var coin2;
 
+			var myCoin;
+			var hisCoin;
+
 			var coinImage;
 			var coinImage2;
 
@@ -71,7 +74,7 @@
 			var tableField;
 			var tableBackground;
 			
-			var pvpLevel;
+			var pvpLevel = undefined;
 			
 			var activePerkNumber = 0;
 
@@ -83,6 +86,9 @@
 			var userData = {perks:[0]};
 			
 			var socket;
+
+			var levelScale = 1;
+			var levelTableFieldSize = 100;
 			
 			function gameLoop () {
 			
@@ -96,25 +102,85 @@
 			  table1.render(elapsed);
 
 			  coin1.update(elapsed);
-			  //coin2.update();
+			  coin2.update();
 			  coin1.render();
-			  //coin2.render();
+			  coin2.render();
 			}
 			
 			function oponentMove(direction)
 			{
-				console.log("oponentMove: " + direction);
+				console.log("oponentMove: " + direction + ", hisCoin.tablePosition.y:" + hisCoin.tablePosition.y + ", hisCoin.tablePosition.x:" + hisCoin.tablePosition.x + ", table1.t_height:" + table1.t_height);
 				if(direction == "up")
 				{
+					if (hisCoin.tablePosition.y>1)
+					{
+						if(table1.t_map)
+						{
+							newFieldIndex = (hisCoin.tablePosition.y-2)*table1.t_width+(hisCoin.tablePosition.x-1)
+							if (table1.t_map[newFieldIndex] == 1)
+							{
+								hisCoin.roll("up");
+							}
+						}
+						else
+						{
+							hisCoin.roll("up");
+						}
+					}
 				}
 				else if(direction == "down")
 				{
+					if (hisCoin.tablePosition.y<table1.t_height)
+					{
+						if(table1.t_map)
+						{
+							newFieldIndex = (hisCoin.tablePosition.y)*table1.t_width+(hisCoin.tablePosition.x-1)
+							if (table1.t_map[newFieldIndex] == 1)
+							{
+								hisCoin.roll("down");
+							}
+						}
+						else
+						{
+							hisCoin.roll("down");
+						}
+					}
 				}
 				else if(direction == "left")
 				{
+					if (hisCoin.tablePosition.x>1)
+					{
+						if(table1.t_map)
+						{
+							newFieldIndex = (hisCoin.tablePosition.y-1)*table1.t_width+(hisCoin.tablePosition.x-1)-1
+							if (table1.t_map[newFieldIndex] == 1)
+							{
+								hisCoin.roll("left");
+							}
+						}
+						else
+						{
+							hisCoin.roll("left");
+						}
+					}
 				}
 				else if(direction == "right")
 				{
+					if (hisCoin.tablePosition.x<table1.t_width)
+					{
+						if(table1.t_map)
+						{
+							newFieldIndex = (hisCoin.tablePosition.y-1)*table1.t_width+(hisCoin.tablePosition.x-1)+1
+							if (table1.t_map[newFieldIndex] == 1)
+							{
+								hisCoin.roll("right");
+							}
+						}
+						else
+						{
+							hisCoin.roll("right");
+						}
+					}
 				}
 				else
 				{
@@ -129,42 +195,48 @@
 				y = coin1.tablePosition.y-1;
 				tableFieldNumber = table1.t_numbers[(y)*table1.t_width + (x)];
 				diceTopNumber = 3;
-				//if finish
-				if ((coin1.tablePosition.x-1 == level[currentLevel].destination.x) && ((coin1.tablePosition.y-1 == level[currentLevel].destination.y)) )
+				
+				if (pvpLevel == undefined) 
 				{
-					//finish level
-					advanceLevel();
-				}
-				//if perk found
-				if (level[currentLevel].perks)
-				{
-					for (i=0; i < level[currentLevel].perks.length; i++)
+					//if finish
+					if ((coin1.tablePosition.x-1 == level[currentLevel].destination.x) && ((coin1.tablePosition.y-1 == level[currentLevel].destination.y)) )
 					{
-						if ((coin1.tablePosition.x-1 == level[currentLevel].perks[i].x) && ((coin1.tablePosition.y-1 == level[currentLevel].perks[i].y)) )
+						//finish level
+						advanceLevel();
+					}
+				
+
+					//if perk found
+					if (level[currentLevel].perks)
+					{
+						for (i=0; i < level[currentLevel].perks.length; i++)
 						{
-							//stepped on perk
-							perki = level[currentLevel].perks[i].id;
-							alert("Perk " + perki + " acquired!");
-							//add perk to the inventory div
-							perkdiv = document.getElementById("perk-"+perki);
-							perkdiv.style.backgroundImage = "url(perk"+perki+".png)";
-							//remove perk from the table
-							table1.t_perks.splice(i,1);
-							//remove perk from the level
-							level[currentLevel].perks.splice(i,1);
-							//add perk to user data
-							userData.perks.push(perki);
-							break;
+							if ((coin1.tablePosition.x-1 == level[currentLevel].perks[i].x) && ((coin1.tablePosition.y-1 == level[currentLevel].perks[i].y)) )
+							{
+								//stepped on perk
+								perki = level[currentLevel].perks[i].id;
+								alert("Perk " + perki + " acquired!");
+								//add perk to the inventory div
+								perkdiv = document.getElementById("perk-"+perki);
+								perkdiv.style.backgroundImage = "url(perk"+perki+".png)";
+								//remove perk from the table
+								table1.t_perks.splice(i,1);
+								//remove perk from the level
+								level[currentLevel].perks.splice(i,1);
+								//add perk to user data
+								userData.perks.push(perki);
+								break;
+							}
 						}
 					}
-				}
-				//if perk stepped
-				if(diceTopNumber == tableFieldNumber)
-				{
-					if (userHasPerk(diceTopNumber))
+					//if perk stepped
+					if(diceTopNumber == tableFieldNumber)
 					{
-						//activate perk
-						activatePerk(diceTopNumber);
+						if (userHasPerk(diceTopNumber))
+						{
+							//activate perk
+							activatePerk(diceTopNumber);
+						}
 					}
 				}
 			}
@@ -174,8 +246,8 @@
 				//move coin to x,y
 				coin1.tablePosition.x = x+1;
 				coin1.tablePosition.y = y+1;
-				coin1.coin_x = x*level[currentLevel].tableFieldSize;
-				coin1.coin_y = y*level[currentLevel].tableFieldSize;
+				coin1.coin_x = x*levelTableFieldSize;
+				coin1.coin_y = y*levelTableFieldSize;
 			}
 
 			function activatePerk(perk)
@@ -205,25 +277,29 @@
 				if ((coin1.coin_direction == "none")&&(coin2.coin_direction == "none")&&(activePerkNumber == 0))
 				{
 					if ((event.keyCode == 37) || (event.keyCode == 81)) {
-						if(socket)
-							socket.emit('game moved', "left");
-							
-						// Turn Left Q
+						
+						console.log("keyCode: " + event.keyCode);
+
+						// Move Left A
 						if (firstPlayer)
 						{
-							if (coin1.tablePosition.x>1)
+							if (myCoin.tablePosition.x>1)
 							{
 								if(table1.t_map)
 								{
-									newFieldIndex = (coin1.tablePosition.y-1)*table1.t_width+(coin1.tablePosition.x-1)-1
+									newFieldIndex = (myCoin.tablePosition.y-1)*table1.t_width+(myCoin.tablePosition.x-1)-1
 									if (table1.t_map[newFieldIndex] == 1)
 									{
-										coin1.roll("left");
+										myCoin.roll("left");
+										if(socket)
+											socket.emit('game moved', "left");
 									}
 								}
 								else
 								{
-									coin1.roll("left");
+									myCoin.roll("left");
+									if(socket)
+										socket.emit('game moved', "left");
 								}
 							}
 						}
@@ -233,24 +309,27 @@
 						}
 					} else if ((event.keyCode == 39) || (event.keyCode == 69)) {
 						// Turne Right E
-						if(socket)
-							socket.emit('game moved', "right");
+						
 
 						if (firstPlayer)
 						{
-							if (coin1.tablePosition.x<table1.t_width)
+							if (myCoin.tablePosition.x<table1.t_width)
 							{
 								if(table1.t_map)
 								{
-									newFieldIndex = (coin1.tablePosition.y-1)*table1.t_width+(coin1.tablePosition.x-1)+1
+									newFieldIndex = (myCoin.tablePosition.y-1)*table1.t_width+(myCoin.tablePosition.x-1)+1
 									if (table1.t_map[newFieldIndex] == 1)
 									{
-										coin1.roll("right");
+										myCoin.roll("right");
+										if(socket)
+											socket.emit('game moved', "right");
 									}
 								}
 								else
 								{
-									coin1.roll("right");
+									myCoin.roll("right");
+									if(socket)
+										socket.emit('game moved', "right");
 								}
 							}
 						}
@@ -260,24 +339,27 @@
 						}
 					} else if ((event.keyCode == 38) || (event.keyCode == 87)) {
 						// Up cursor key or W
-						if(socket)
-							socket.emit('game moved', "up");
+						
 							
 						if (firstPlayer)
 						{
-							if (coin1.tablePosition.y>1)
+							if (myCoin.tablePosition.y>1)
 							{
 								if(table1.t_map)
 								{
-									newFieldIndex = (coin1.tablePosition.y-2)*table1.t_width+(coin1.tablePosition.x-1)
+									newFieldIndex = (myCoin.tablePosition.y-2)*table1.t_width+(myCoin.tablePosition.x-1)
 									if (table1.t_map[newFieldIndex] == 1)
 									{
-										coin1.roll("up");
+										myCoin.roll("up");
+										if(socket)
+											socket.emit('game moved', "up");
 									}
 								}
 								else
 								{
-									coin1.roll("up");
+									myCoin.roll("up");
+									if(socket)
+										socket.emit('game moved', "up");
 								}
 							}
 						}
@@ -287,24 +369,27 @@
 						}
 					} else if ((event.keyCode == 40) || (event.keyCode == 83)) {
 						// Down cursor key or S
-						if(socket)
-							socket.emit('game moved', "down");
+						
 
 						if (firstPlayer)
 						{
-							if (coin1.tablePosition.y<table1.t_height)
+							if (myCoin.tablePosition.y<table1.t_height)
 							{
 								if(table1.t_map)
 								{
-									newFieldIndex = (coin1.tablePosition.y)*table1.t_width+(coin1.tablePosition.x-1)
+									newFieldIndex = (myCoin.tablePosition.y)*table1.t_width+(myCoin.tablePosition.x-1)
 									if (table1.t_map[newFieldIndex] == 1)
 									{
-										coin1.roll("down");
+										myCoin.roll("down");
+										if(socket)
+											socket.emit('game moved', "down");
 									}
 								}
 								else
 								{
-									coin1.roll("down");
+									myCoin.roll("down");
+									if(socket)
+										socket.emit('game moved', "down");
 								}
 							}
 						}
@@ -325,14 +410,14 @@
 				var x_pos = event.clientX;
 				var y_pos = event.clientY;
 				var rect = canvas.getBoundingClientRect();
+
 				//check that mouse position is within table position
-				levelScale = level[currentLevel].tableFieldSize/100;
 				if ((x_pos>rect.left+20*levelScale) && (x_pos<rect.left+rect.width-20*levelScale) && (y_pos>rect.top+20*levelScale) && (y_pos<rect.top+rect.height-20*levelScale))
 				{
 					var tableX = x_pos-(rect.left+20*levelScale);
 					var tableY = y_pos-(rect.top+20*levelScale);
-					var i = Math.floor(tableX/level[currentLevel].tableFieldSize);
-					var j = Math.floor(tableY/level[currentLevel].tableFieldSize);
+					var i = Math.floor(tableX/levelTableFieldSize);
+					var j = Math.floor(tableY/levelTableFieldSize);
 					var numberMouseIsHovering = table1.t_numbers[(j)*table1.t_width + (i)];
 					if(activePerkNumber == 3)
 					{
@@ -366,18 +451,87 @@
 				var rect = canvas.getBoundingClientRect();
 				
 				//check that mouse position is within table position
-
-				levelScale = level[currentLevel].tableFieldSize/100;
 				if ((x_pos>rect.left+20*levelScale) && (x_pos<rect.left+rect.width-20*levelScale) && (y_pos>rect.top+20*levelScale) && (y_pos<rect.top+rect.height-20*levelScale))
 				{
 					var tableX = x_pos-(rect.left+20*levelScale);
 					var tableY = y_pos-(rect.top+20*levelScale);
 					//console.log("in canvas onMouseClick " + tableX + " " + tableY);
-					var i = Math.floor(tableX/level[currentLevel].tableFieldSize);
-					var j = Math.floor(tableY/level[currentLevel].tableFieldSize);
-					var numberClickedOn = table1.t_numbers[(j)*table1.t_width + (i)];
-					console.log("clicked on " + i + " " + j);
-					console.log("clicked on number: " + numberClickedOn);
+					var i = Math.floor(tableX/levelTableFieldSize);
+					var j = Math.floor(tableY/levelTableFieldSize);
+					//var numberClickedOn = table1.t_numbers[(j)*table1.t_width + (i)];
+					console.log("clicked on " + i + " " + j + ", myCoin.tablePosition.x:" + myCoin.tablePosition.x + ", myCoin.tablePosition.y:" + myCoin.tablePosition.y);
+
+
+					if ((myCoin.tablePosition.x==i)&&(myCoin.tablePosition.y==j+1))
+					{
+						// if(table1.t_map)
+						// {
+						// 	newFieldIndex = (coin1.tablePosition.y-1)*table1.t_width+(coin1.tablePosition.x-1)-1
+						// 	if (table1.t_map[newFieldIndex] == 1)
+						// 	{
+						// 		coin1.roll("left");
+						// 	}
+						// }
+						// else
+						{
+							myCoin.roll("right");
+							if(socket)
+								socket.emit('game moved', "right");
+						}
+					}
+					if ((myCoin.tablePosition.x==i+2)&&(myCoin.tablePosition.y==j+1))
+					{
+						// if(table1.t_map)
+						// {
+						// 	newFieldIndex = (coin1.tablePosition.y-1)*table1.t_width+(coin1.tablePosition.x-1)-1
+						// 	if (table1.t_map[newFieldIndex] == 1)
+						// 	{
+						// 		coin1.roll("left");
+						// 	}
+						// }
+						// else
+						{
+							myCoin.roll("left");
+							if(socket)
+								socket.emit('game moved', "left");
+						}
+					}
+					if ((myCoin.tablePosition.y==j+2)&&(myCoin.tablePosition.x==i+1))
+					{
+						// if(table1.t_map)
+						// {
+						// 	newFieldIndex = (coin1.tablePosition.y-1)*table1.t_width+(coin1.tablePosition.x-1)-1
+						// 	if (table1.t_map[newFieldIndex] == 1)
+						// 	{
+						// 		coin1.roll("left");
+						// 	}
+						// }
+						// else
+						{
+							myCoin.roll("up");
+							if(socket)
+								socket.emit('game moved', "up");
+						}
+					}
+					if ((myCoin.tablePosition.y==j)&&(myCoin.tablePosition.x==i+1))
+					{
+						// if(table1.t_map)
+						// {
+						// 	newFieldIndex = (coin1.tablePosition.y-1)*table1.t_width+(coin1.tablePosition.x-1)-1
+						// 	if (table1.t_map[newFieldIndex] == 1)
+						// 	{
+						// 		coin1.roll("left");
+						// 	}
+						// }
+						// else
+						{
+							myCoin.roll("down");
+							if(socket)
+								socket.emit('game moved', "down");
+						}
+					}
+
+					//console.log("clicked on number: " + numberClickedOn);
 					if (activePerkNumber == 3)
 					{
 						if (numberClickedOn == 3)
@@ -540,6 +694,20 @@
 				{
 					oponentMove(msg);
 				})
+				socket.on('game start', function(msg)
+				{
+					alert("game started:"+msg.gameId + ", playerNumber:" + msg.playerNumber);
+					if (msg.playerNumber == 1)
+					{
+						myCoin = coin1;
+						hisCoin = coin2;
+					}
+					else
+					{
+						myCoin = coin2;
+						hisCoin = coin1;
+					}
+				})
 			
 				pvpLevel = {
 					tableFieldSize:100,
@@ -548,8 +716,10 @@
 					destination:{x:5,y:5},
 					start:{x:0,y:0},
 					numbers: [],
-					tableFieldImage: "table-field2.png",
-					tableBackgroundImage: "tileBackground2.png",
+					tableFieldImage: "rock_tile_100.png",
+					start1:{x:0,y:0},
+					start2:{x:6,y:6},
+					//tableBackgroundImage: "tileBackground2.png",
 					message: "pvp table"
 				};
 			
@@ -605,6 +775,10 @@
 
 			function showLevel ()
 			{
+				
+				//ngh
+				pvpLevel = undefined;
+
 				if (currentLevel < 3)
 				{
 					instructionsDiv = document.getElementById("id-div-instructions");
@@ -625,16 +799,18 @@
 				instructionsDiv = document.getElementById("id-div-levels");
 				instructionsDiv.style.display = "none";
 
-				var scale = level[currentLevel].tableFieldSize/100;
+				levelTableFieldSize = level[currentLevel].tableFieldSize;
+				levelScale = level[currentLevel].tableFieldSize/100;
+
 				// Get canvas
 				canvas = document.getElementById("id-canvas-cubeRun");
-				canvas.width = level[currentLevel].tableWidth*level[currentLevel].tableFieldSize+40*scale;
-				canvas.height = level[currentLevel].tableHeight*level[currentLevel].tableFieldSize+40*scale;
+				canvas.width = level[currentLevel].tableWidth*level[currentLevel].tableFieldSize+40*levelScale;
+				canvas.height = level[currentLevel].tableHeight*level[currentLevel].tableFieldSize+40*levelScale;
 
 				// Get table
 				tableDiv = document.getElementById("id-div-table");
-				tableDiv.style.width = "" + (level[currentLevel].tableWidth*level[currentLevel].tableFieldSize+40*scale) + "px";
-				tableDiv.style.height = "" + (level[currentLevel].tableHeight*level[currentLevel].tableFieldSize+40*scale) + "px";
+				tableDiv.style.width = "" + (level[currentLevel].tableWidth*level[currentLevel].tableFieldSize+40*levelScale) + "px";
+				tableDiv.style.height = "" + (level[currentLevel].tableHeight*level[currentLevel].tableFieldSize+40*levelScale) + "px";
 				
 				// Create sprite sheet
 				coinImage = new Image();
@@ -715,16 +891,17 @@
 			
 			function showPVPLevel ()
 			{
-				var scale = pvpLevel.tableFieldSize/100;
+				levelTableFieldSize = pvpLevel.tableFieldSize;
+				levelScale = pvpLevel.tableFieldSize/100;
 				// Get canvas
 				canvas = document.getElementById("id-canvas-cubeRun");
-				canvas.width = pvpLevel.tableWidth*pvpLevel.tableFieldSize+40*scale;
-				canvas.height = pvpLevel.tableHeight*pvpLevel.tableFieldSize+40*scale;
+				canvas.width = pvpLevel.tableWidth*pvpLevel.tableFieldSize+40*levelScale;
+				canvas.height = pvpLevel.tableHeight*pvpLevel.tableFieldSize+40*levelScale;
 
 				// Get table
 				tableDiv = document.getElementById("id-div-table");
-				tableDiv.style.width = "" + (pvpLevel.tableWidth*pvpLevel.tableFieldSize+40*scale) + "px";
-				tableDiv.style.height = "" + (pvpLevel.tableHeight*pvpLevel.tableFieldSize+40*scale) + "px";
+				tableDiv.style.width = "" + (pvpLevel.tableWidth*pvpLevel.tableFieldSize+40*levelScale) + "px";
+				tableDiv.style.height = "" + (pvpLevel.tableHeight*pvpLevel.tableFieldSize+40*levelScale) + "px";
 				
 				if (pvpLevel.tableFieldImage)
 				{
@@ -759,7 +936,7 @@
 					numberOfFrames: 11,
 					ticksPerFrame: 1,
 					topNumber: 1,
-					start: pvpLevel.start
+					start: pvpLevel.start1
 				});
 
 				coin2 = coin({
@@ -773,7 +950,7 @@
 					numberOfFrames: 11,
 					ticksPerFrame: 1,
 					topNumber: 1,
-					start: pvpLevel.start
+					start: pvpLevel.start2
 				});
 				
 				table1 = table({

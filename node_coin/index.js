@@ -27,6 +27,8 @@ io.on('connection', function(socket){
 		newGame.player2socket = socket;
 		newGame.started = true;
 		//TODO: send game id to both players
+		newGame.player1socket.emit('game start',{gameId:newGame.id,playerNumber:1});
+		newGame.player2socket.emit('game start',{gameId:newGame.id,playerNumber:2});
 		games.push(newGame);
 		newGame = {};
 		console.log("games:"+games);
