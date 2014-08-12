@@ -1,0 +1,7 @@
+
++ pvp level mouse calculations
++ move on mouse click
++ move two players on board
+- your move / please wait opponent move
+- waiting for player 2 to join the game
+- game finished: you won/lost!
