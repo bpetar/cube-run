@@ -7,7 +7,7 @@
             <span style="cursor:pointer; color:blue; margin: auto 5px auto 5px" onclick="firstLevel()">begin</span> <span style="cursor:pointer; color:blue; margin: auto 5px auto 5px" onclick="refresh()">restart</span> <span style="cursor:pointer; color:blue; margin: auto 5px auto 5px" onclick="showLevelsInfo()">levels</span> <span style="cursor:pointer; color:blue; margin: auto 5px auto 5px" onclick="showAbout()">about</span>
         </div>
         <div id="id-div-headline" style="border: green solid 1px; text-align: center; margin: auto auto 20px auto; width:260px; height:80px;">
-            <p> CUBE RUN</p>
+            <p> CUBE RUNDA </p>
             <p id="id-p-level"> <span style="cursor:pointer; color:blue;" onclick="previousLevel()"> < </span> <span style="margin: auto 50px auto 50px" id="id-span-level"> Level 1 </span> <span style="cursor:pointer; color:blue;" onclick="nextLevel()"> > </span> </p>
         </div>
         <div id="id-div-table" style="margin:auto auto auto auto; width:50%; height:50%;">
@@ -60,8 +60,12 @@
             //var coin1;
             //var coin2;
 
-            var cubeImage;
+            var cubeImage1;
             var cubeImage2;
+						var cubeImage3;
+						var cubeImage4;
+						var cubeImage5;
+						var cubeImage6;
 
             var canvas;
             var firstPlayer = true;
@@ -427,26 +431,26 @@
                 tableWidth:5,
                 tableHeight:1,
                 destination:{x:4,y:0},
-                start:{x:0,y:0},
+                start:{x:2,y:0},
                 numbers: [1,2,3,4,5],
                 //tableFieldImage: "table-field.png",
                 //tableBackgroundImage: "tileBackground.png",
                 message: "",
-                topNumber: 1,
-                cube1Rotation: 1
+                topNumber: 5,
+                cube1Rotation: 0
             },
             {
                 tableFieldSize:100,
                 tableWidth:4,
-                tableHeight:2,
-                destination:{x:3,y:0},
-                start:{x:0,y:0},
-                numbers: [1,6,4,5,2,3,5,1],
+                tableHeight:3,
+                destination:{x:3,y:1},
+                start:{x:1,y:1},
+                numbers: [2,3,5,1,1,6,4,5,2,3,5,1],
                 //tableFieldImage: "table-field3.png",
                 //tableBackgroundImage: "tileBackground.png",
                 message: "Congratulations! \n\nBut that was easy start. You might find next level more challenging..",
-                topNumber: 1,
-                cube1Rotation: 3
+                topNumber: 3,
+                cube1Rotation: 1
             },
             {
                 tableFieldSize:80,

@@ -113,18 +113,158 @@ function cube (options) {
 			}
 			else if (that.topNumber == 2)
 			{
+				if (that.rotationState == 0)
+				{
+					that.topNumber = 3;
+					that.rotationState = 0;
+					that.current_cube_image = that.cube_image3;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 1)
+				{
+					that.topNumber = 1;
+					that.rotationState = 0;
+					that.current_cube_image = that.cube_image1;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 2)
+				{
+					that.topNumber = 4;
+					that.rotationState = 2;
+					that.current_cube_image = that.cube_image4;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 3)
+				{
+					that.topNumber = 6;
+					that.rotationState = 0;
+					that.current_cube_image = that.cube_image6;
+					that.cube_animation_row = 6*that.rotationState;
+				}
 			}
 			else if (that.topNumber == 3)
 			{
+				if (that.rotationState == 0)
+				{
+					that.topNumber = 5;
+					that.rotationState = 0;
+					that.current_cube_image = that.cube_image5;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 1)
+				{
+					that.topNumber = 1;
+					that.rotationState = 1;
+					that.current_cube_image = that.cube_image1;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 2)
+				{
+					that.topNumber = 2;
+					that.rotationState = 2;
+					that.current_cube_image = that.cube_image2;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 3)
+				{
+					that.topNumber = 6;
+					that.rotationState = 3;
+					that.current_cube_image = that.cube_image6;
+					that.cube_animation_row = 6*that.rotationState;
+				}
 			}
 			else if (that.topNumber == 4)
 			{
+				if (that.rotationState == 0)
+				{
+					that.topNumber = 2;
+					that.rotationState = 0;
+					that.current_cube_image = that.cube_image2;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 1)
+				{
+					that.topNumber = 1;
+					that.rotationState = 3;
+					that.current_cube_image = that.cube_image1;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 2)
+				{
+					that.topNumber = 5;
+					that.rotationState = 2;
+					that.current_cube_image = that.cube_image5;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 3)
+				{
+					that.topNumber = 6;
+					that.rotationState = 1;
+					that.current_cube_image = that.cube_image6;
+					that.cube_animation_row = 6*that.rotationState;
+				}
 			}
 			else if (that.topNumber == 5)
 			{
+				if (that.rotationState == 0)
+				{
+					that.topNumber = 4;
+					that.rotationState = 0;
+					that.current_cube_image = that.cube_image4;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 1)
+				{
+					that.topNumber = 1;
+					that.rotationState = 2;
+					that.current_cube_image = that.cube_image1;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 2)
+				{
+					that.topNumber = 3;
+					that.rotationState = 2;
+					that.current_cube_image = that.cube_image3;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 3)
+				{
+					that.topNumber = 6;
+					that.rotationState = 2;
+					that.current_cube_image = that.cube_image6;
+					that.cube_animation_row = 6*that.rotationState;
+				}
 			}
 			else if (that.topNumber == 6)
 			{
+				if (that.rotationState == 0)
+				{
+					that.topNumber = 5;
+					that.rotationState = 1;
+					that.current_cube_image = that.cube_image5;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 1)
+				{
+					that.topNumber = 3;
+					that.rotationState = 1;
+					that.current_cube_image = that.cube_image3;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 2)
+				{
+					that.topNumber = 2;
+					that.rotationState = 1;
+					that.current_cube_image = that.cube_image2;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 3)
+				{
+					that.topNumber = 4;
+					that.rotationState = 1;
+					that.current_cube_image = that.cube_image4;
+					that.cube_animation_row = 6*that.rotationState;
+				}
 			}
 		}
 		else if (_direction == "left") {
@@ -161,18 +301,158 @@ function cube (options) {
 			}
 			else if (that.topNumber == 2)
 			{
+				if (that.rotationState == 0)
+				{
+					that.topNumber = 4;
+					that.rotationState = 0;
+					that.current_cube_image = that.cube_image4;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 1)
+				{
+					that.topNumber = 6;
+					that.rotationState = 2;
+					that.current_cube_image = that.cube_image6;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 2)
+				{
+					that.topNumber = 3;
+					that.rotationState = 2;
+					that.current_cube_image = that.cube_image3;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 3)
+				{
+					that.topNumber = 1;
+					that.rotationState = 2;
+					that.current_cube_image = that.cube_image1;
+					that.cube_animation_row = 6*that.rotationState;
+				}
 			}
 			else if (that.topNumber == 3)
 			{
+				if (that.rotationState == 0)
+				{
+					that.topNumber = 2;
+					that.rotationState = 0;
+					that.current_cube_image = that.cube_image2;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 1)
+				{
+					that.topNumber = 6;
+					that.rotationState = 1;
+					that.current_cube_image = that.cube_image6;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 2)
+				{
+					that.topNumber = 5;
+					that.rotationState = 2;
+					that.current_cube_image = that.cube_image5;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 3)
+				{
+					that.topNumber = 1;
+					that.rotationState = 3;
+					that.current_cube_image = that.cube_image1;
+					that.cube_animation_row = 6*that.rotationState;
+				}
 			}
 			else if (that.topNumber == 4)
 			{
+				if (that.rotationState == 0)
+				{
+					that.topNumber = 5;
+					that.rotationState = 0;
+					that.current_cube_image = that.cube_image5;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 1)
+				{
+					that.topNumber = 6;
+					that.rotationState = 3;
+					that.current_cube_image = that.cube_image6;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 2)
+				{
+					that.topNumber = 2;
+					that.rotationState = 2;
+					that.current_cube_image = that.cube_image2;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 3)
+				{
+					that.topNumber = 1;
+					that.rotationState = 1;
+					that.current_cube_image = that.cube_image1;
+					that.cube_animation_row = 6*that.rotationState;
+				}
 			}
 			else if (that.topNumber == 5)
 			{
+				if (that.rotationState == 0)
+				{
+					that.topNumber = 3;
+					that.rotationState = 0;
+					that.current_cube_image = that.cube_image3;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 1)
+				{
+					that.topNumber = 6;
+					that.rotationState = 0;
+					that.current_cube_image = that.cube_image6;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 2)
+				{
+					that.topNumber = 4;
+					that.rotationState = 2;
+					that.current_cube_image = that.cube_image4;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 3)
+				{
+					that.topNumber = 1;
+					that.rotationState = 0;
+					that.current_cube_image = that.cube_image1;
+					that.cube_animation_row = 6*that.rotationState;
+				}
 			}
 			else if (that.topNumber == 6)
 			{
+				if (that.rotationState == 0)
+				{
+					that.topNumber = 2;
+					that.rotationState = 3;
+					that.current_cube_image = that.cube_image2;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 1)
+				{
+					that.topNumber = 4;
+					that.rotationState = 3;
+					that.current_cube_image = that.cube_image4;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 2)
+				{
+					that.topNumber = 5;
+					that.rotationState = 3;
+					that.current_cube_image = that.cube_image5;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 3)
+				{
+					that.topNumber = 3;
+					that.rotationState = 3;
+					that.current_cube_image = that.cube_image3;
+					that.cube_animation_row = 6*that.rotationState;
+				}
 			}
 		}
 		else if (_direction == "up") {
@@ -209,18 +489,158 @@ function cube (options) {
 			}
 			else if (that.topNumber == 2)
 			{
+				if (that.rotationState == 0)
+				{
+					that.topNumber = 6;
+					that.rotationState = 1;
+					that.current_cube_image = that.cube_image6;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 1)
+				{
+					that.topNumber = 3;
+					that.rotationState = 1;
+					that.current_cube_image = that.cube_image3;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 2)
+				{
+					that.topNumber = 1;
+					that.rotationState = 1;
+					that.current_cube_image = that.cube_image1;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 3)
+				{
+					that.topNumber = 4;
+					that.rotationState = 3;
+					that.current_cube_image = that.cube_image4;
+					that.cube_animation_row = 6*that.rotationState;
+				}
 			}
 			else if (that.topNumber == 3)
 			{
+				if (that.rotationState == 0)
+				{
+					that.topNumber = 6;
+					that.rotationState = 0;
+					that.current_cube_image = that.cube_image6;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 1)
+				{
+					that.topNumber = 5;
+					that.rotationState = 1;
+					that.current_cube_image = that.cube_image5;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 2)
+				{
+					that.topNumber = 1;
+					that.rotationState = 2;
+					that.current_cube_image = that.cube_image1;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 3)
+				{
+					that.topNumber = 2;
+					that.rotationState = 3;
+					that.current_cube_image = that.cube_image2;
+					that.cube_animation_row = 6*that.rotationState;
+				}
 			}
 			else if (that.topNumber == 4)
 			{
+				if (that.rotationState == 0)
+				{
+					that.topNumber = 6;
+					that.rotationState = 2;
+					that.current_cube_image = that.cube_image6;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 1)
+				{
+					that.topNumber = 2;
+					that.rotationState = 1;
+					that.current_cube_image = that.cube_image2;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 2)
+				{
+					that.topNumber = 1;
+					that.rotationState = 0;
+					that.current_cube_image = that.cube_image1;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 3)
+				{
+					that.topNumber = 5;
+					that.rotationState = 3;
+					that.current_cube_image = that.cube_image5;
+					that.cube_animation_row = 6*that.rotationState;
+				}
 			}
 			else if (that.topNumber == 5)
 			{
+				if (that.rotationState == 0)
+				{
+					that.topNumber = 6;
+					that.rotationState = 3;
+					that.current_cube_image = that.cube_image6;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 1)
+				{
+					that.topNumber = 4;
+					that.rotationState = 1;
+					that.current_cube_image = that.cube_image4;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 2)
+				{
+					that.topNumber = 1;
+					that.rotationState = 3;
+					that.current_cube_image = that.cube_image1;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 3)
+				{
+					that.topNumber = 3;
+					that.rotationState = 3;
+					that.current_cube_image = that.cube_image3;
+					that.cube_animation_row = 6*that.rotationState;
+				}
 			}
 			else if (that.topNumber == 6)
 			{
+				if (that.rotationState == 0)
+				{
+					that.topNumber = 4;
+					that.rotationState = 2;
+					that.current_cube_image = that.cube_image4;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 1)
+				{
+					that.topNumber = 5;
+					that.rotationState = 2;
+					that.current_cube_image = that.cube_image5;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 2)
+				{
+					that.topNumber = 3;
+					that.rotationState = 2;
+					that.current_cube_image = that.cube_image3;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 3)
+				{
+					that.topNumber = 2;
+					that.rotationState = 2;
+					that.current_cube_image = that.cube_image2;
+					that.cube_animation_row = 6*that.rotationState;
+				}
 			}
 		}
 		else if (_direction == "down") {
@@ -257,18 +677,158 @@ function cube (options) {
 			}
 			else if (that.topNumber == 2)
 			{
+				if (that.rotationState == 0)
+				{
+					that.topNumber = 1;
+					that.rotationState = 3;
+					that.current_cube_image = that.cube_image1;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 1)
+				{
+					that.topNumber = 4;
+					that.rotationState = 1;
+					that.current_cube_image = that.cube_image4;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 2)
+				{
+					that.topNumber = 6;
+					that.rotationState = 3;
+					that.current_cube_image = that.cube_image6;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 3)
+				{
+					that.topNumber = 3;
+					that.rotationState = 3;
+					that.current_cube_image = that.cube_image3;
+					that.cube_animation_row = 6*that.rotationState;
+				}
 			}
 			else if (that.topNumber == 3)
 			{
+				if (that.rotationState == 0)
+				{
+					that.topNumber = 1;
+					that.rotationState = 0;
+					that.current_cube_image = that.cube_image1;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 1)
+				{
+					that.topNumber = 2;
+					that.rotationState = 1;
+					that.current_cube_image = that.cube_image2;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 2)
+				{
+					that.topNumber = 6;
+					that.rotationState = 2;
+					that.current_cube_image = that.cube_image6;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 3)
+				{
+					that.topNumber = 5;
+					that.rotationState = 3;
+					that.current_cube_image = that.cube_image5;
+					that.cube_animation_row = 6*that.rotationState;
+				}
 			}
 			else if (that.topNumber == 4)
 			{
+				if (that.rotationState == 0)
+				{
+					that.topNumber = 1;
+					that.rotationState = 2;
+					that.current_cube_image = that.cube_image1;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 1)
+				{
+					that.topNumber = 5;
+					that.rotationState = 1;
+					that.current_cube_image = that.cube_image5;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 2)
+				{
+					that.topNumber = 6;
+					that.rotationState = 0;
+					that.current_cube_image = that.cube_image6;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 3)
+				{
+					that.topNumber = 2;
+					that.rotationState = 3;
+					that.current_cube_image = that.cube_image2;
+					that.cube_animation_row = 6*that.rotationState;
+				}
 			}
 			else if (that.topNumber == 5)
 			{
+				if (that.rotationState == 0)
+				{
+					that.topNumber = 1;
+					that.rotationState = 1;
+					that.current_cube_image = that.cube_image1;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 1)
+				{
+					that.topNumber = 3;
+					that.rotationState = 1;
+					that.current_cube_image = that.cube_image3;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 2)
+				{
+					that.topNumber = 6;
+					that.rotationState = 1;
+					that.current_cube_image = that.cube_image6;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 3)
+				{
+					that.topNumber = 4;
+					that.rotationState = 3;
+					that.current_cube_image = that.cube_image4;
+					that.cube_animation_row = 6*that.rotationState;
+				}
 			}
 			else if (that.topNumber == 6)
 			{
+				if (that.rotationState == 0)
+				{
+					that.topNumber = 3;
+					that.rotationState = 0;
+					that.current_cube_image = that.cube_image3;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 1)
+				{
+					that.topNumber = 2;
+					that.rotationState = 0;
+					that.current_cube_image = that.cube_image2;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 2)
+				{
+					that.topNumber = 4;
+					that.rotationState = 0;
+					that.current_cube_image = that.cube_image4;
+					that.cube_animation_row = 6*that.rotationState;
+				}
+				else if (that.rotationState == 3)
+				{
+					that.topNumber = 5;
+					that.rotationState = 0;
+					that.current_cube_image = that.cube_image5;
+					that.cube_animation_row = 6*that.rotationState;
+				}
 			}
 		}
 	}
