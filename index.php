@@ -7,7 +7,7 @@
             <span style="cursor:pointer; color:blue; margin: auto 5px auto 5px" onclick="firstLevel()">begin</span> <span style="cursor:pointer; color:blue; margin: auto 5px auto 5px" onclick="refresh()">restart</span> <span style="cursor:pointer; color:blue; margin: auto 5px auto 5px" onclick="showLevelsInfo()">levels</span> <span style="cursor:pointer; color:blue; margin: auto 5px auto 5px" onclick="showAbout()">about</span>
         </div>
         <div id="id-div-headline" style="border: green solid 1px; text-align: center; margin: auto auto 20px auto; width:260px; height:80px;">
-            <p> CUBE RUNDA </p>
+            <p> CUBE RUN </p>
             <p id="id-p-level"> <span style="cursor:pointer; color:blue;" onclick="previousLevel()"> < </span> <span style="margin: auto 50px auto 50px" id="id-span-level"> Level 1 </span> <span style="cursor:pointer; color:blue;" onclick="nextLevel()"> > </span> </p>
         </div>
         <div id="id-div-table" style="margin:auto auto auto auto; width:50%; height:50%;">
@@ -15,8 +15,8 @@
         </div>
 
         <div id="id-div-instructions" style="text-align: center; margin: 10px auto 10px auto; width:480px; height:80px;">
-            <span> 1. Roll your cube to reach destination. </span> <br>
-            <span> 2. Number on the top of the cube must match number on the destination field.</span>
+            <span> 1. Roll your cube to reach destination (use arrow keys or click next to cube). </span> <br>
+            <span id="id-span-matching-text"> 2. Number on the top of the cube must match number on the destination field.</span>
         </div>
 
         <div id="id-div-perks" style="display:none; text-align: center; margin: 10px auto 10px auto; width:630px; height:80px;">
@@ -48,8 +48,8 @@
             <span style="cursor:pointer; color:blue; text-decoration:underline" onclick="showLevelIndex(1)"> Level 01: Learn to roll.</span> <br>
             <span style="cursor:pointer; color:blue; text-decoration:underline"  onclick="showLevelIndex(2)"> Level 02: The catch.</span> <br>
             <span style="cursor:pointer; color:blue; text-decoration:underline"  onclick="showLevelIndex(3)"> Level 03: Play the game.</span> <br>
-            <span style="cursor:pointer; color:blue; text-decoration:underline"  onclick="showLevelIndex(4)"> Level 04: About the Perks.</span> <br>
-            <span style="cursor:pointer; color:blue; text-decoration:underline"  onclick="showLevelIndex(5)"> Level 05: ToDo.</span> <br>
+            <span style="cursor:pointer; color:blue; text-decoration:underline"  onclick="showLevelIndex(4)"> Level 04: About the holes.</span> <br>
+            <span style="cursor:pointer; color:blue; text-decoration:underline"  onclick="showLevelIndex(5)"> Level 05: Thinking ahead.</span> <br>
         </div>
 
         <script src="./cube.js"></script>
@@ -107,12 +107,20 @@
                 x = cube1.tablePosition.x-1;
                 y = cube1.tablePosition.y-1;
                 tableFieldNumber = table1.t_numbers[(y)*table1.t_width + (x)];
-                diceTopNumber = 3;
+                diceTopNumber = cube1.topNumber;
                 //if finish
                 if ((cube1.tablePosition.x-1 == level[currentLevel].destination.x) && ((cube1.tablePosition.y-1 == level[currentLevel].destination.y)) )
                 {
-                    //finish level
-                    advanceLevel();
+										if (tableFieldNumber == diceTopNumber)
+										{
+											//finish level
+											advanceLevel();
+										}
+										else
+										{
+											//hint user he still need to roll to get it right
+											document.getElementById("id-span-matching-text").style.color = "red";
+										}
                 }
                 //if perk found
                 if (level[currentLevel].perks)
@@ -359,19 +367,19 @@
 
             }
 
-            function advanceLevel()
-            {
-                currentLevel++;
-				if (currentLevel >= level.length)
-				{
-					currentLevel--;
-					alert("That was last level, come back later for more.");
-					return;
-				}
-                alert(level[currentLevel].message)
-                document.getElementById("id-span-level").innerHTML = "Level " + (currentLevel + 1);
-                showLevel();
-            }
+						function advanceLevel()
+						{
+							currentLevel++;
+							if (currentLevel >= level.length)
+							{
+								currentLevel--;
+								alert("That was last level, come back later for more.");
+								return;
+							}
+							alert(level[currentLevel-1].message)
+							document.getElementById("id-span-level").innerHTML = "Level " + (currentLevel + 1);
+							showLevel();
+						}
 
             function previousLevel()
             {
@@ -427,15 +435,15 @@
 
             // Level params            
             var level = [{
-                tableFieldSize:150,
+                tableFieldSize:100,
                 tableWidth:5,
                 tableHeight:1,
                 destination:{x:4,y:0},
-                start:{x:2,y:0},
+                start:{x:0,y:0},
                 numbers: [1,2,3,4,5],
                 //tableFieldImage: "table-field.png",
                 //tableBackgroundImage: "tileBackground.png",
-                message: "",
+                message: "Congratulations!",
                 topNumber: 5,
                 cube1Rotation: 0
             },
@@ -444,39 +452,54 @@
                 tableWidth:4,
                 tableHeight:3,
                 destination:{x:3,y:1},
-                start:{x:1,y:1},
+                start:{x:0,y:1},
                 numbers: [2,3,5,1,1,6,4,5,2,3,5,1],
                 //tableFieldImage: "table-field3.png",
                 //tableBackgroundImage: "tileBackground.png",
-                message: "Congratulations! \n\nBut that was easy start. You might find next level more challenging..",
-                topNumber: 3,
-                cube1Rotation: 1
+                message: "Well Done!",
+                topNumber: 5,
+                cube1Rotation: 0
             },
             {
-                tableFieldSize:80,
-                tableWidth:6,
-                tableHeight:6,
-                destination:{x:2,y:2},
-                start:{x:5,y:5},
-                numbers: [],
-                tableFieldImage: "table-field2.png",
-                tableBackgroundImage: "tileBackground2.png",
-                message: "Well Done! \n\nLets see how you handle wider areas..",
+                tableFieldSize:100,
+                tableWidth:5,
+                tableHeight:7,
+                destination:{x:2,y:3},
+                start:{x:4,y:6},
+                numbers: [2,3,5,1,1,6,4,5,2,3,5,2,4,3,6,6,2,1,5,3,1,3,2,4,5,6,1,3,5,4,2,4,5,3,1],
+                //tableFieldImage: "table-field2.png",
+                //tableBackgroundImage: "tileBackground2.png",
+                message: "Superb!",
                 topNumber: 1,
                 cube1Rotation: 0
             },
             {
-                tableFieldSize:60,
+                tableFieldSize:100,
                 tableWidth:5,
                 tableHeight:7,
                 destination:{x:2,y:0},
                 start:{x:2,y:6},
-                perks:[{id:3,x:3,y:5}],
+                //perks:[{id:3,x:3,y:5}],
                 numbers: [],
-                tableFieldImage: "table-field.png",
-                tableBackgroundImage: "tileBackground.png",
+                //tableFieldImage: "table-field.png",
+                //tableBackgroundImage: "tileBackground.png",
                 map:[0,0,1,0,0, 1,1,1,1,1, 1,1,1,1,1, 1,0,1,0,1, 1,1,1,1,1, 1,1,1,1,1, 0,0,1,0,0],
-                message: "Superb! \n\nNow you must learn about The Perks..",
+                message: "Aha!",
+                topNumber: 1,
+                cube1Rotation: 2
+            },
+						{
+                tableFieldSize:100,
+                tableWidth:5,
+                tableHeight:7,
+                destination:{x:0,y:0},
+                start:{x:2,y:6},
+                //perks:[{id:3,x:3,y:5}],
+                numbers: [],
+                //tableFieldImage: "table-field.png",
+                //tableBackgroundImage: "tileBackground.png",
+                map:[1,1,1,1,1, 0,0,0,0,1, 1,1,1,1,1, 1,0,0,0,0, 1,1,1,0,0, 1,1,1,0,0, 0,0,1,0,0],
+                message: "Aha!",
                 topNumber: 1,
                 cube1Rotation: 2
             }];
@@ -546,20 +569,21 @@
 
             function showLevel ()
             {
-                if (currentLevel < 3)
+								document.getElementById("id-span-matching-text").style.color = "black";
+                //if (currentLevel < 3)
                 {
                     instructionsDiv = document.getElementById("id-div-instructions");
                     instructionsDiv.style.display = "block";
                     instructionsDiv = document.getElementById("id-div-perks");
                     instructionsDiv.style.display = "none";
                 }
-                else
-                {
-                    instructionsDiv = document.getElementById("id-div-instructions");
-                    instructionsDiv.style.display = "none";
-                    instructionsDiv = document.getElementById("id-div-perks");
-                    instructionsDiv.style.display = "block";
-                }
+                // else
+                // {
+                    // instructionsDiv = document.getElementById("id-div-instructions");
+                    // instructionsDiv.style.display = "none";
+                    // instructionsDiv = document.getElementById("id-div-perks");
+                    // instructionsDiv.style.display = "block";
+                // }
 
                 instructionsDiv = document.getElementById("id-div-about");
                 instructionsDiv.style.display = "none";

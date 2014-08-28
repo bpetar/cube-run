@@ -1,0 +1,3 @@
+
+- total number of moves.
+- ranking for all who finished by total moves!
