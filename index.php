@@ -119,7 +119,7 @@
 										else
 										{
 											//hint user he still need to roll to get it right
-											document.getElementById("id-span-matching-text").style.color = "red";
+											document.getElementById("id-span-matching-text").style.color = "green";
 										}
                 }
                 //if perk found
@@ -348,11 +348,90 @@
                     var tableX = x_pos-(rect.left+20*levelScale);
                     var tableY = y_pos-(rect.top+20*levelScale);
                     //console.log("in canvas onMouseClick " + tableX + " " + tableY);
-                    var i = Math.floor(tableX/level[currentLevel].tableFieldSize);
-                    var j = Math.floor(tableY/level[currentLevel].tableFieldSize);
+                    var i = Math.floor(tableX/level[currentLevel].tableFieldSize)+1;
+                    var j = Math.floor(tableY/level[currentLevel].tableFieldSize)+1;
                     var numberClickedOn = table1.t_numbers[(j)*table1.t_width + (i)];
                     console.log("clicked on " + i + " " + j);
                     console.log("clicked on number: " + numberClickedOn);
+										
+										if ((cube1.tablePosition.x<i)&&(cube1.tablePosition.y==j))
+										{
+											//going right
+											console.log("going right");											
+											if(table1.t_map)
+											{
+													newFieldIndex = (cube1.tablePosition.y-1)*table1.t_width+(cube1.tablePosition.x-1)+1
+													if (table1.t_map[newFieldIndex] == 1)
+													{
+															cube1.roll("right");
+													}
+											}
+											else
+											{
+													cube1.roll("right");
+											}
+										}
+										else if ((cube1.tablePosition.x>i)&&(cube1.tablePosition.y==j))
+										{
+											//going left
+											console.log("going left");
+											if (cube1.tablePosition.x>1)
+											{
+													if(table1.t_map)
+													{
+															newFieldIndex = (cube1.tablePosition.y-1)*table1.t_width+(cube1.tablePosition.x-1)-1
+															if (table1.t_map[newFieldIndex] == 1)
+															{
+																	cube1.roll("left");
+															}
+													}
+													else
+													{
+															cube1.roll("left");
+													}
+											}
+										}
+										else if ((cube1.tablePosition.x==i)&&(cube1.tablePosition.y>j))
+										{
+											//going up
+											console.log("going up");
+											if (cube1.tablePosition.y>1)
+											{
+													if(table1.t_map)
+													{
+															newFieldIndex = (cube1.tablePosition.y-2)*table1.t_width+(cube1.tablePosition.x-1)
+															if (table1.t_map[newFieldIndex] == 1)
+															{
+																	cube1.roll("up");
+															}
+													}
+													else
+													{
+															cube1.roll("up");
+													}
+											}
+										}
+										else if ((cube1.tablePosition.x==i)&&(cube1.tablePosition.y<j))
+										{
+											//going down
+											console.log("going down");
+											if (cube1.tablePosition.y<table1.t_height)
+											{
+													if(table1.t_map)
+													{
+															newFieldIndex = (cube1.tablePosition.y)*table1.t_width+(cube1.tablePosition.x-1)
+															if (table1.t_map[newFieldIndex] == 1)
+															{
+																	cube1.roll("down");
+															}
+													}
+													else
+													{
+															cube1.roll("down");
+													}
+											}
+										}
+										
                     if (activePerkNumber == 3)
                     {
                         if (numberClickedOn == 3)
@@ -360,7 +439,7 @@
                             activePerkNumber = 0;
                             //remove shadow
                             tableDiv.style.cursor = 'auto';
-                            teleport(i,j);
+                            teleport(i-1,j-1);
                         }
                     }
                 }
