@@ -2,22 +2,29 @@
     <head>
         <title>Cube Run Demo</title>
     </head>
-    <body>
-        <div id="id-div-menu" style="text-align: center; margin: auto auto auto auto; width:260px;">
-            <span style="cursor:pointer; color:blue; margin: auto 5px auto 5px" onclick="firstLevel()">begin</span> <span style="cursor:pointer; color:blue; margin: auto 5px auto 5px" onclick="refresh()">restart</span> <span style="cursor:pointer; color:blue; margin: auto 5px auto 5px" onclick="showLevelsInfo()">levels</span> <span style="cursor:pointer; color:blue; margin: auto 5px auto 5px" onclick="showAbout()">about</span>
+    <body style="background-color:#111111">
+        <div id="id-div-menu" style="text-align: center; margin: auto auto 1px auto; display:block;">
+            <span style="cursor:pointer; color:#c8efc8; margin: auto 5px auto 5px" onclick="firstLevel()">begin</span> <span style="cursor:pointer; color:#c8efc8; margin: auto 5px auto 5px" onclick="refresh()">restart</span> <span style="cursor:pointer; color:#c8efc8; margin: auto 5px auto 5px" onclick="showLevelsInfo()">levels</span> <span style="cursor:pointer; color:#c8efc8; margin: auto 5px auto 5px" onclick="showAbout()">about</span>
         </div>
-        <div id="id-div-headline" style="border: green solid 1px; text-align: center; margin: auto auto 20px auto; width:260px; height:80px;">
-            <p> CUBE RUN </p>
-            <p id="id-p-level"> <span style="cursor:pointer; color:blue;" onclick="previousLevel()"> < </span> <span style="margin: auto 50px auto 50px" id="id-span-level"> Level 1 </span> <span style="cursor:pointer; color:blue;" onclick="nextLevel()"> > </span> </p>
+		<div id="id-div-headline" style="border: green solid 0px; text-align: center; margin: -1px auto 1px auto; display:block;">
+			<div id="id-game-name" style="border: green solid 0px; font-size:380%; display:block; color:white;"> CUBE RUN</div>
+			<div id="id-p-level" style="border: red solid 0px; clear:both; display:block;"> 
+			<!--<span style="cursor:pointer; color:blue;" onclick="previousLevel()"> < </span>--> 
+			<span id="id-span-level" style="margin: auto 1px auto auto; width:80px; color:white;">Level: 1</span> 
+			<span id="id-span-moves" style="margin: auto 1px auto 171px; width:80px; color:white;">Moves: 0</span>
+			<!--<span style="cursor:pointer; color:blue;" onclick="nextLevel()"> > </span> -->
+			</div>
+		</div>
+
+        <div id="id-div-instructions" style="display:none; color:#eeee99; border: green solid 0px; text-align: center; margin: 30px auto 10px auto; width:580px; height:50px;">
+            <span> 1. Roll your cube to reach destination (use arrow keys or mouse click). </span> <br>
+            <span id="id-span-matching-text"> 2. Number on top of the cube must match the number on destination field.</span>
         </div>
+
         <div id="id-div-table" style="margin:auto auto auto auto; width:50%; height:50%;">
             <canvas id="id-canvas-cubeRun"></canvas>
         </div>
 
-        <div id="id-div-instructions" style="text-align: center; margin: 10px auto 10px auto; width:480px; height:80px;">
-            <span> 1. Roll your cube to reach destination (use arrow keys or click next to cube). </span> <br>
-            <span id="id-span-matching-text"> 2. Number on the top of the cube must match number on the destination field.</span>
-        </div>
 
         <div id="id-div-perks" style="display:none; text-align: center; margin: 10px auto 10px auto; width:630px; height:80px;">
             <span> 1. Every number has its perk. </span> <br>
@@ -39,17 +46,17 @@
             </div>
         </div>
 
-        <div id="id-div-about" style="display:none; text-align: center; margin: 10px auto 10px auto; width:480px; height:80px;">
-            <span> Cube Run is game designed and created by Ajandi Endre and Petar Bajic.</span> <br>
-            <span> For best experience, we suggest you draw table on the paper and play against your friends.</span>
+        <div id="id-div-about" style="display:none; color:#eeee99; text-align: center; margin: 10px auto 10px auto; width:480px; height:80px;">
+            <span> Cube Run is game designed and created by Endre Ajandi and Petar Bajic.</span> <br>
+            <!--<span> For best experience, we suggest you draw table on the paper and play against your friends.</span>-->
         </div>
 
          <div id="id-div-levels" style="display:none; text-align: center; margin: 10px auto 10px auto; width:480px; height:80px;">
-            <span style="cursor:pointer; color:blue; text-decoration:underline" onclick="showLevelIndex(1)"> Level 01: Learn to roll.</span> <br>
-            <span style="cursor:pointer; color:blue; text-decoration:underline"  onclick="showLevelIndex(2)"> Level 02: The catch.</span> <br>
-            <span style="cursor:pointer; color:blue; text-decoration:underline"  onclick="showLevelIndex(3)"> Level 03: Play the game.</span> <br>
-            <span style="cursor:pointer; color:blue; text-decoration:underline"  onclick="showLevelIndex(4)"> Level 04: About the holes.</span> <br>
-            <span style="cursor:pointer; color:blue; text-decoration:underline"  onclick="showLevelIndex(5)"> Level 05: Thinking ahead.</span> <br>
+            <span style="cursor:pointer; color:#eeee99; text-decoration:underline" onclick="showLevelIndex(1)"> Level 01: Learn to roll.</span> <br>
+            <span style="cursor:pointer; color:#eeee99; text-decoration:underline"  onclick="showLevelIndex(2)"> Level 02: The catch.</span> <br>
+            <span style="cursor:pointer; color:#eeee99; text-decoration:underline"  onclick="showLevelIndex(3)"> Level 03: Play the game.</span> <br>
+            <span style="cursor:pointer; color:#eeee99; text-decoration:underline"  onclick="showLevelIndex(4)"> Level 04: About the holes.</span> <br>
+            <span style="cursor:pointer; color:#eeee99; text-decoration:underline"  onclick="showLevelIndex(5)"> Level 05: Thinking ahead.</span> <br>
         </div>
 
         <script src="./cube.js"></script>
@@ -57,8 +64,7 @@
 
         <script>
 
-            //var coin1;
-            //var coin2;
+            var numberOfMoves = 0;
 
             var cubeImage1;
             var cubeImage2;
@@ -104,6 +110,8 @@
             }
             
             function moveFinished() {
+				numberOfMoves++;
+				document.getElementById("id-span-moves").innerHTML = "Moves: " + numberOfMoves;
                 x = cube1.tablePosition.x-1;
                 y = cube1.tablePosition.y-1;
                 tableFieldNumber = table1.t_numbers[(y)*table1.t_width + (x)];
@@ -119,7 +127,7 @@
 										else
 										{
 											//hint user he still need to roll to get it right
-											document.getElementById("id-span-matching-text").style.color = "green";
+											//document.getElementById("id-span-matching-text").style.color = "green";
 										}
                 }
                 //if perk found
@@ -326,123 +334,124 @@
 
             function onMouseClick(event) 
             {
+				if (cube1.cube_direction == "none")
+				{
+					var isRightMB;
+					var e = event || window.event;
+					if ("which" in e)  // Gecko (Firefox), WebKit (Safari/Chrome) & Opera
+						isRightMB = e.which == 3; 
+					else if ("button" in e)  // IE, Opera 
+						isRightMB = e.button == 2; 
+					
+					var x_pos = event.clientX;
+					var y_pos = event.clientY;
 
+					var rect = canvas.getBoundingClientRect();
+					
+					//check that mouse position is within table position
 
-                var isRightMB;
-                var e = event || window.event;
-                if ("which" in e)  // Gecko (Firefox), WebKit (Safari/Chrome) & Opera
-                    isRightMB = e.which == 3; 
-                else if ("button" in e)  // IE, Opera 
-                    isRightMB = e.button == 2; 
-                
-                var x_pos = event.clientX;
-                var y_pos = event.clientY;
-
-                var rect = canvas.getBoundingClientRect();
-                
-                //check that mouse position is within table position
-
-                levelScale = level[currentLevel].tableFieldSize/100;
-                if ((x_pos>rect.left+20*levelScale) && (x_pos<rect.left+rect.width-20*levelScale) && (y_pos>rect.top+20*levelScale) && (y_pos<rect.top+rect.height-20*levelScale))
-                {
-                    var tableX = x_pos-(rect.left+20*levelScale);
-                    var tableY = y_pos-(rect.top+20*levelScale);
-                    //console.log("in canvas onMouseClick " + tableX + " " + tableY);
-                    var i = Math.floor(tableX/level[currentLevel].tableFieldSize)+1;
-                    var j = Math.floor(tableY/level[currentLevel].tableFieldSize)+1;
-                    var numberClickedOn = table1.t_numbers[(j)*table1.t_width + (i)];
-                    console.log("clicked on " + i + " " + j);
-                    console.log("clicked on number: " + numberClickedOn);
-										
-										if ((cube1.tablePosition.x<i)&&(cube1.tablePosition.y==j))
-										{
-											//going right
-											console.log("going right");											
-											if(table1.t_map)
+					levelScale = level[currentLevel].tableFieldSize/100;
+					if ((x_pos>rect.left+20*levelScale) && (x_pos<rect.left+rect.width-20*levelScale) && (y_pos>rect.top+20*levelScale) && (y_pos<rect.top+rect.height-20*levelScale))
+					{
+						var tableX = x_pos-(rect.left+20*levelScale);
+						var tableY = y_pos-(rect.top+20*levelScale);
+						//console.log("in canvas onMouseClick " + tableX + " " + tableY);
+						var i = Math.floor(tableX/level[currentLevel].tableFieldSize)+1;
+						var j = Math.floor(tableY/level[currentLevel].tableFieldSize)+1;
+						var numberClickedOn = table1.t_numbers[(j)*table1.t_width + (i)];
+						console.log("clicked on " + i + " " + j);
+						console.log("clicked on number: " + numberClickedOn);
+											
+											if ((cube1.tablePosition.x<i)&&(cube1.tablePosition.y==j))
 											{
-													newFieldIndex = (cube1.tablePosition.y-1)*table1.t_width+(cube1.tablePosition.x-1)+1
-													if (table1.t_map[newFieldIndex] == 1)
-													{
-															cube1.roll("right");
-													}
+												//going right
+												console.log("going right");											
+												if(table1.t_map)
+												{
+														newFieldIndex = (cube1.tablePosition.y-1)*table1.t_width+(cube1.tablePosition.x-1)+1
+														if (table1.t_map[newFieldIndex] == 1)
+														{
+																cube1.roll("right");
+														}
+												}
+												else
+												{
+														cube1.roll("right");
+												}
 											}
-											else
+											else if ((cube1.tablePosition.x>i)&&(cube1.tablePosition.y==j))
 											{
-													cube1.roll("right");
+												//going left
+												console.log("going left");
+												if (cube1.tablePosition.x>1)
+												{
+														if(table1.t_map)
+														{
+																newFieldIndex = (cube1.tablePosition.y-1)*table1.t_width+(cube1.tablePosition.x-1)-1
+																if (table1.t_map[newFieldIndex] == 1)
+																{
+																		cube1.roll("left");
+																}
+														}
+														else
+														{
+																cube1.roll("left");
+														}
+												}
 											}
-										}
-										else if ((cube1.tablePosition.x>i)&&(cube1.tablePosition.y==j))
-										{
-											//going left
-											console.log("going left");
-											if (cube1.tablePosition.x>1)
+											else if ((cube1.tablePosition.x==i)&&(cube1.tablePosition.y>j))
 											{
-													if(table1.t_map)
-													{
-															newFieldIndex = (cube1.tablePosition.y-1)*table1.t_width+(cube1.tablePosition.x-1)-1
-															if (table1.t_map[newFieldIndex] == 1)
-															{
-																	cube1.roll("left");
-															}
-													}
-													else
-													{
-															cube1.roll("left");
-													}
+												//going up
+												console.log("going up");
+												if (cube1.tablePosition.y>1)
+												{
+														if(table1.t_map)
+														{
+																newFieldIndex = (cube1.tablePosition.y-2)*table1.t_width+(cube1.tablePosition.x-1)
+																if (table1.t_map[newFieldIndex] == 1)
+																{
+																		cube1.roll("up");
+																}
+														}
+														else
+														{
+																cube1.roll("up");
+														}
+												}
 											}
-										}
-										else if ((cube1.tablePosition.x==i)&&(cube1.tablePosition.y>j))
-										{
-											//going up
-											console.log("going up");
-											if (cube1.tablePosition.y>1)
+											else if ((cube1.tablePosition.x==i)&&(cube1.tablePosition.y<j))
 											{
-													if(table1.t_map)
-													{
-															newFieldIndex = (cube1.tablePosition.y-2)*table1.t_width+(cube1.tablePosition.x-1)
-															if (table1.t_map[newFieldIndex] == 1)
-															{
-																	cube1.roll("up");
-															}
-													}
-													else
-													{
-															cube1.roll("up");
-													}
+												//going down
+												console.log("going down");
+												if (cube1.tablePosition.y<table1.t_height)
+												{
+														if(table1.t_map)
+														{
+																newFieldIndex = (cube1.tablePosition.y)*table1.t_width+(cube1.tablePosition.x-1)
+																if (table1.t_map[newFieldIndex] == 1)
+																{
+																		cube1.roll("down");
+																}
+														}
+														else
+														{
+																cube1.roll("down");
+														}
+												}
 											}
-										}
-										else if ((cube1.tablePosition.x==i)&&(cube1.tablePosition.y<j))
-										{
-											//going down
-											console.log("going down");
-											if (cube1.tablePosition.y<table1.t_height)
-											{
-													if(table1.t_map)
-													{
-															newFieldIndex = (cube1.tablePosition.y)*table1.t_width+(cube1.tablePosition.x-1)
-															if (table1.t_map[newFieldIndex] == 1)
-															{
-																	cube1.roll("down");
-															}
-													}
-													else
-													{
-															cube1.roll("down");
-													}
-											}
-										}
-										
-                    if (activePerkNumber == 3)
-                    {
-                        if (numberClickedOn == 3)
-                        {
-                            activePerkNumber = 0;
-                            //remove shadow
-                            tableDiv.style.cursor = 'auto';
-                            teleport(i-1,j-1);
-                        }
-                    }
-                }
+											
+						if (activePerkNumber == 3)
+						{
+							if (numberClickedOn == 3)
+							{
+								activePerkNumber = 0;
+								//remove shadow
+								tableDiv.style.cursor = 'auto';
+								teleport(i-1,j-1);
+							}
+						}
+					}
+				}
 
             }
 
@@ -456,7 +465,7 @@
 								return;
 							}
 							alert(level[currentLevel-1].message)
-							document.getElementById("id-span-level").innerHTML = "Level " + (currentLevel + 1);
+							//document.getElementById("id-span-level").innerHTML = "Level: " + (currentLevel + 1);
 							showLevel();
 						}
 
@@ -466,13 +475,13 @@
                 currentLevel--;
                 if (currentLevel >= 0)
                 {
-                    document.getElementById("id-span-level").innerHTML = "Level " + (currentLevel + 1);
+                    //document.getElementById("id-span-level").innerHTML = "Level: " + (currentLevel + 1);
                     showLevel();
                 }
                 else if (inAndAbout)
                 {
                     currentLevel++;
-                    document.getElementById("id-span-level").innerHTML = "Level " + (currentLevel + 1);
+                    //document.getElementById("id-span-level").innerHTML = "Level: " + (currentLevel + 1);
                     showLevel();
                 }
                 else
@@ -493,14 +502,14 @@
                     return;
                 }
                 //alert(level[currentLevel].message)
-                document.getElementById("id-span-level").innerHTML = "Level " + (currentLevel + 1);
+                //document.getElementById("id-span-level").innerHTML = "Level: " + (currentLevel + 1);
                 showLevel();
             }
 
             function firstLevel()
             {
                 currentLevel = 0;
-                document.getElementById("id-span-level").innerHTML = "Level " + (currentLevel + 1);
+                //document.getElementById("id-span-level").innerHTML = "Level: " + (currentLevel + 1);
                 showLevel();
             }
 
@@ -586,11 +595,12 @@
             function showAbout ()
             {
                 inAndAbout = true;
-                document.getElementById("id-span-level").innerHTML = "Level About"
+                //document.getElementById("id-span-level").innerHTML = "Level About"
 
                 tableDiv = document.getElementById("id-div-table");
                 tableDiv.style.width = "0px";
                 tableDiv.style.height = "0px";
+				tableDiv.style.marginTop="10px";
 
                 canvas = document.getElementById("id-canvas-cubeRun");
                 canvas.width = 0;
@@ -611,11 +621,12 @@
             function showLevelsInfo ()
             {
                 inAndAbout = true;
-                document.getElementById("id-span-level").innerHTML = "Level About"
+                //document.getElementById("id-span-level").innerHTML = "Level About"
 
                 tableDiv = document.getElementById("id-div-table");
                 tableDiv.style.width = "0px";
                 tableDiv.style.height = "0px";
+				tableDiv.style.marginTop="10px";
 
                 canvas = document.getElementById("id-canvas-cubeRun");
                 canvas.width = 0;
@@ -648,21 +659,23 @@
 
             function showLevel ()
             {
-								document.getElementById("id-span-matching-text").style.color = "black";
-                //if (currentLevel < 3)
+				//document.getElementById("id-span-matching-text").style.color = "black";
+				document.getElementById("id-span-level").innerHTML = "Level: " + (currentLevel + 1);
+				
+                if (currentLevel < 2)
                 {
                     instructionsDiv = document.getElementById("id-div-instructions");
-                    instructionsDiv.style.display = "block";
+                    instructionsDiv.style.display = "none";
                     instructionsDiv = document.getElementById("id-div-perks");
                     instructionsDiv.style.display = "none";
                 }
-                // else
-                // {
-                    // instructionsDiv = document.getElementById("id-div-instructions");
-                    // instructionsDiv.style.display = "none";
+                else
+                {
+                    instructionsDiv = document.getElementById("id-div-instructions");
+                    instructionsDiv.style.display = "none";
                     // instructionsDiv = document.getElementById("id-div-perks");
                     // instructionsDiv.style.display = "block";
-                // }
+                }
 
                 instructionsDiv = document.getElementById("id-div-about");
                 instructionsDiv.style.display = "none";
@@ -680,6 +693,14 @@
                 tableDiv.style.width = "" + (level[currentLevel].tableWidth*level[currentLevel].tableFieldSize+40*scale) + "px";
                 tableDiv.style.height = "" + (level[currentLevel].tableHeight*level[currentLevel].tableFieldSize+40*scale) + "px";
                 
+				var verticalSpace = (window.innerHeight - 230 - (level[currentLevel].tableHeight*level[currentLevel].tableFieldSize+40*scale))/2;
+				if (verticalSpace<0)
+					verticalSpace=0;
+				if (verticalSpace>115) 
+					verticalSpace=115;
+				tableDiv.style.marginTop="" + verticalSpace + "px";
+				console.log("screen height:" + verticalSpace + " table height:" + tableDiv.style.height);
+				
                 // Create sprite sheets for cube
                 cubeImage1 = new Image();
                 cubeImage1.src = "cube-1-animation.png";

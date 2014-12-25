@@ -127,9 +127,15 @@ function table (options) {
             else
             {
               that.t_context.beginPath();
-              that.t_context.lineWidth = "2";
-              that.t_context.strokeStyle = "black";
+              
               that.t_context.rect(i*that.t_squareWidth+20*that.t_scale, j*that.t_squareHeight+20*that.t_scale, that.t_squareWidth, that.t_squareHeight);
+			  
+			  that.t_context.fillStyle = '#222222';
+				that.t_context.fill();
+				that.t_context.lineWidth = 2;
+				
+				that.t_context.strokeStyle = 'black';
+				that.t_context.stroke();
               that.t_context.stroke();
             }
 
@@ -151,6 +157,16 @@ function table (options) {
             that.t_context.lineWidth = "1";
             that.t_context.font=""+ 60*that.t_scale + "px Arial";
             that.t_context.strokeText(""+that.t_numbers[(j*that.t_width) + i], i*that.t_squareWidth + 52*that.t_scale, j*that.t_squareHeight + 87*that.t_scale);
+			//draw destination number
+			  if ((that.t_destination.x == i) && (that.t_destination.y == j))
+			  {
+				that.t_context.strokeStyle = "black";
+				that.t_context.font=""+ 60*that.t_scale + "px Arial";
+				that.t_context.strokeText(""+that.t_numbers[(j*that.t_width) + i], i*that.t_squareWidth + 52*that.t_scale, j*that.t_squareHeight + 87*that.t_scale);
+				that.t_context.fillStyle = "red";
+				that.t_context.fillText(""+that.t_numbers[(j*that.t_width) + i], i*that.t_squareWidth + 52*that.t_scale, j*that.t_squareHeight + 87*that.t_scale);
+				//console.log("ajaj" + i);
+			  }
           }
         }
         else
@@ -174,9 +190,18 @@ function table (options) {
           else
           {
             that.t_context.beginPath();
-            that.t_context.lineWidth = "2";
-            that.t_context.strokeStyle = "black";
+            //that.t_context.lineWidth = "2";
+            //that.t_context.strokeStyle = "black";
+			//that.t_context.fillRect(i*that.t_squareWidth+20*that.t_scale, j*that.t_squareHeight+20*that.t_scale, that.t_squareWidth, that.t_squareHeight);
             that.t_context.rect(i*that.t_squareWidth+20*that.t_scale, j*that.t_squareHeight+20*that.t_scale, that.t_squareWidth, that.t_squareHeight);
+			
+			that.t_context.fillStyle = '#222222';
+			that.t_context.fill();
+			that.t_context.lineWidth = 2;
+			
+			that.t_context.strokeStyle = 'black';
+			that.t_context.stroke();
+	  
             that.t_context.stroke();
           }
 
@@ -195,8 +220,19 @@ function table (options) {
           //draw number
           that.t_context.beginPath();
           that.t_context.strokeStyle = "gray"
+		  that.t_context.lineWidth = "1";
           that.t_context.font=""+ 60*that.t_scale + "px Arial";
           that.t_context.strokeText(""+that.t_numbers[(j*that.t_width) + i], i*that.t_squareWidth + 52*that.t_scale, j*that.t_squareHeight + 87*that.t_scale);
+		  //draw destination number
+		  if ((that.t_destination.x == i) && (that.t_destination.y == j))
+		  {
+			that.t_context.strokeStyle = "black";
+			that.t_context.font=""+ 60*that.t_scale + "px Arial";
+			that.t_context.strokeText(""+that.t_numbers[(j*that.t_width) + i], i*that.t_squareWidth + 52*that.t_scale, j*that.t_squareHeight + 87*that.t_scale);
+			that.t_context.fillStyle = "red";
+			that.t_context.fillText(""+that.t_numbers[(j*that.t_width) + i], i*that.t_squareWidth + 52*that.t_scale, j*that.t_squareHeight + 87*that.t_scale);
+			//console.log("ajaj" + i);
+		  }
         }
       }
     }
@@ -220,11 +256,11 @@ function table (options) {
     }
 
     //draw destination rectangle
-    that.t_context.beginPath();
-    that.t_context.lineWidth = "4";
-    that.t_context.strokeStyle = t_numberColor[5-1];
-    that.t_context.rect(that.t_destination.x*that.t_squareWidth + 35*that.t_scale, that.t_destination.y*that.t_squareHeight + 34*that.t_scale, that.t_squareWidth-30*that.t_scale, that.t_squareHeight-33*that.t_scale);
-    that.t_context.stroke();
+    // that.t_context.beginPath();
+    // that.t_context.lineWidth = "4";
+    // that.t_context.strokeStyle = t_numberColor[5-1];
+    // that.t_context.rect(that.t_destination.x*that.t_squareWidth + 35*that.t_scale, that.t_destination.y*that.t_squareHeight + 34*that.t_scale, that.t_squareWidth-30*that.t_scale, that.t_squareHeight-33*that.t_scale);
+    // that.t_context.stroke();
 
     // that.t_context.beginPath();
     // that.t_context.lineWidth = "1";
