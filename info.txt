@@ -1,4 +1,19 @@
 
-- total number of moves.
++ total number of moves.
+/ black fields to emphasis holes
++ make black background and white texts
++ destination number black
++ move info text away
++ remove level about
+/ Make Move number different color?
 - ranking for all who finished by total moves!
 - kreni kocko i vrati se
+- alert to be replaced with nice dialog
+- scale table to small screens
+- smaller tables hights?
+- loading ...
+- nice welcome screen
+- favicon?
++ double click bug
+- level list to lock higher levels
+- to unlock this level write a magic word
